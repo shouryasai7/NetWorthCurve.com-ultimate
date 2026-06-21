@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="500 - Server Error | NetWorthCurve.com"
+	description="Something went wrong on our end. Please try again or contact support."
+	noindex={true}
+>
+	<div class="error-page">
+		<div class="error-content">
+			<div class="error-code">500</div>
+			<div class="error-icon error-icon-red">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+					<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+					<line x1="12" y1="9" x2="12" y2="13"/>
+					<line x1="12" y1="17" x2="12.01" y2="17"/>
+				</svg>
+			</div>
+			<h1 class="error-title">Internal Server Error</h1>
+			<p class="error-message">Something went wrong on our end. Don't worry, your data is safe — all calculations happen locally in your browser. Please try refreshing the page.</p>
+
+			<div class="error-actions">
+				<button onclick="location.reload()" class="btn btn-primary">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="23 4 23 10 17 10"/>
+						<path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+					</svg>
+					Refresh Page
+				</button>
+				<a href="/" class="btn btn-secondary">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+						<polyline points="9 22 9 12 15 12 15 22"/>
+					</svg>
+					Go Home
+				</a>
+			</div>
+
+			<div class="error-status">
+				<div class="status-item">
+					<span class="status-label">Error Code</span>
+					<span class="status-value">500</span>
+				</div>
+				<div class="status-item">
+					<span class="status-label">Status</span>
+					<span class="status-value error">Internal Server Error</span>
+				</div>
+				<div class="status-item">
+					<span class="status-label">Your Data</span>
+					<span class="status-value success">Safe (Local)</span>
+				</div>
+			</div>
+
+			<div class="help-section">
+				<p>If this problem persists, please <a href="/contact">contact our support team</a>.</p>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.error-page {
+		min-height: calc(100vh - 200px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-8) var(--space-4);
+	}
+
+	.error-content {
+		text-align: center;
+		max-width: 600px;
+	}
+
+	.error-code {
+		font-size: clamp(6rem, 20vw, 12rem);
+		font-weight: 700;
+		line-height: 1;
+		background: linear-gradient(135deg, var(--crimson-600) 0%, var(--crimson-500) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		opacity: 0.3;
+		margin-bottom: var(--space-4);
+	}
+
+	.error-icon-red {
+		background: linear-gradient(135deg, var(--crimson-700), var(--crimson-600));
+		box-shadow: 0 0 30px rgba(192, 57, 43, 0.3);
+	}
+
+	.error-icon-red svg {
+		color: var(--crimson-300);
+	}
+
+	.error-icon {
+		width: 80px;
+		height: 80px;
+		margin: 0 auto var(--space-6);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+	}
+
+	.error-icon svg {
+		width: 40px;
+		height: 40px;
+	}
+
+	.error-title {
+		font-size: clamp(1.5rem, 4vw, 2rem);
+		margin-bottom: var(--space-4);
+	}
+
+	.error-message {
+		font-size: 1rem;
+		color: var(--charcoal-400);
+		margin-bottom: var(--space-8);
+		line-height: 1.6;
+	}
+
+	.error-actions {
+		display: flex;
+		gap: var(--space-4);
+		justify-content: center;
+		flex-wrap: wrap;
+		margin-bottom: var(--space-10);
+	}
+
+	.error-actions .btn svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.error-status {
+		display: flex;
+		justify-content: center;
+		gap: var(--space-6);
+		flex-wrap: wrap;
+		padding: var(--space-5);
+		background: var(--charcoal-850);
+		border: 1px solid var(--charcoal-700);
+		border-radius: var(--radius-lg);
+		margin-bottom: var(--space-6);
+	}
+
+	.status-item {
+		text-align: center;
+	}
+
+	.status-label {
+		display: block;
+		font-size: 0.7rem;
+		color: var(--charcoal-500);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: var(--space-1);
+	}
+
+	.status-value {
+		font-family: var(--font-mono);
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--charcoal-200);
+	}
+
+	.status-value.error {
+		color: var(--crimson-400);
+	}
+
+	.status-value.success {
+		color: var(--emerald-400);
+	}
+
+	.help-section {
+		font-size: 0.9rem;
+		color: var(--charcoal-400);
+	}
+
+	.help-section a {
+		color: var(--emerald-400);
+	}
+</style>

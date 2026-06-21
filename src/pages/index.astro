@@ -1,0 +1,1209 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqSchema = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": [
+		{
+			"@type": "Question",
+			"name": "How is net worth different from cashflow?",
+			"acceptedAnswer": { "@type": "Answer", "text": "Net worth is a snapshot of total assets minus liabilities at a point in time. Cashflow is how much money moves monthly. You can have high net worth but negative cashflow. Healthy finances need both." }
+		},
+		{
+			"@type": "Question",
+			"name": "Why no monthly expenses in the Net Worth Calculator?",
+			"acceptedAnswer": { "@type": "Answer", "text": "Net worth is a balance sheet concept measuring what you own versus owe. Monthly expenses are a cashflow concept. Mixing them distorts both. Use Engine B for cashflow analysis." }
+		},
+		{
+			"@type": "Question",
+			"name": "Can I add my own categories?",
+			"acceptedAnswer": { "@type": "Answer", "text": "Yes. Every panel has an Add button. Enter a name and a custom row appears. Custom rows have an X button to remove them. Default rows cannot be removed." }
+		},
+		{
+			"@type": "Question",
+			"name": "How accurate are the compound interest projections?",
+			"acceptedAnswer": { "@type": "Answer", "text": "Projections assume consistent returns which markets do not guarantee. Historical S&P 500 averages approximately 10% annually (7% inflation-adjusted). Use for directional planning only." }
+		},
+		{
+			"@type": "Question",
+			"name": "What is the difference between compound and simple interest?",
+			"acceptedAnswer": { "@type": "Answer", "text": "Simple interest is calculated on the original principal only — it does not grow. Compound interest earns returns on both the principal and previously earned interest, resulting in exponential growth. Simple interest is common for short-term loans and fixed deposits; compound interest is used for most investments, savings accounts, and mortgages." }
+		},
+		{
+			"@type": "Question",
+			"name": "How do I use the Simple Interest calculator for a loan?",
+			"acceptedAnswer": { "@type": "Answer", "text": "Switch to Engine C, click the Simple Interest tab, then click Loan mode. Enter the loan principal, the annual interest rate offered by your lender, and the loan term. The calculator shows total interest payable, total amount to repay, and the monthly installment." }
+		},
+		{
+			"@type": "Question",
+			"name": "Which currencies are supported?",
+			"acceptedAnswer": { "@type": "Answer", "text": "The main currency dropdown supports all 180 national fiat currencies — searchable by name or ISO code. Gold (XAU) and Silver (XAG) are selectable directly on the Bullion Metals row inside the Assets panel in Engine A. Bitcoin (BTC), Ethereum (ETH), and Solana (SOL) are selectable on the Digital Assets row in the same panel. All calculations update instantly." }
+		}
+	]
+};
+---
+
+<Layout>
+	<section class="hero-section">
+		<div class="hero-bg">
+			<div class="grid-pattern"></div>
+			<div class="gradient-orb orb-1"></div>
+			<div class="gradient-orb orb-2"></div>
+		</div>
+		<div class="hero-content">
+			<div class="hero-badge">
+				<span class="badge-dot pulse"></span>
+				<span class="badge-text">V2.0 Three Engine Release</span>
+			</div>
+			<h1 class="hero-title">
+				<span class="title-line">Sovereign Wealth</span>
+				<span class="title-line accent">Management System</span>
+			</h1>
+			<p class="hero-subtitle">Zero tracking. Zero cloud sync. Complete privacy. Your financial data never leaves your device.</p>
+			<div class="hero-metrics">
+				<div class="metric"><span class="metric-value">100%</span><span class="metric-label">Client-Side</span></div>
+				<div class="metric-divider"></div>
+				<div class="metric"><span class="metric-value">0</span><span class="metric-label">Data Stored</span></div>
+				<div class="metric-divider"></div>
+				<div class="metric"><span class="metric-value">3</span><span class="metric-label">Engines</span></div>
+			</div>
+		</div>
+		<div class="scroll-hint">
+			<span>Scroll to Calculate</span>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+		</div>
+	</section>
+
+	<section class="currency-section">
+		<div class="wrap">
+			<p class="section-label">UNIVERSAL CURRENCY MATRIX</p>
+			<p class="cur-instruction">Click the dropdown below to select your base currency from all 180 national currencies. Your selection applies across all three engines instantly.</p>
+			<div class="cur-dropdown-wrap">
+				<button class="cur-trigger" id="cur-trigger" aria-haspopup="listbox" aria-expanded="false">
+					<span class="cur-t-sym" id="cur-t-sym">$</span>
+					<span class="cur-t-divider"></span>
+					<span class="cur-t-info">
+						<span class="cur-t-name" id="cur-t-name">US Dollar</span>
+						<span class="cur-t-code" id="cur-t-code">USD</span>
+					</span>
+					<svg class="cur-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+				</button>
+				<div class="cur-panel" id="cur-panel" role="listbox" aria-label="Select currency" hidden>
+					<div class="cur-search-wrap">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" class="cur-search-icon"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+						<input type="text" id="cur-search" class="cur-search" placeholder="Search by name or code (e.g. Euro, USD)..." autocomplete="off" spellcheck="false"/>
+					</div>
+					<div class="cur-list" id="cur-list"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="engine-section" id="networth">
+		<div class="wrap">
+			<div class="engine-header">
+				<span class="engine-tag"><span class="badge-dot pulse"></span> ENGINE A</span>
+				<h2>Sovereign Net Worth Calculator &amp; Report Generator</h2>
+				<p>Calculate your true net worth by measuring total assets against total liabilities. Add custom categories to match your exact financial picture.</p>
+			</div>
+			<div class="two-col">
+				<div class="panel">
+					<div class="panel-head">
+						<div><h3>Assets</h3><small>What you own</small></div>
+						<div class="ptotal ppos"><small>TOTAL</small><span class="cs">$</span><span id="a-assets-hd">0</span></div>
+					</div>
+					<div class="rows-list" id="nw-assets">
+						<div class="row-item"><label>Cash &amp; Savings</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-asset" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Stocks &amp; Securities</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-asset" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Real Estate</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-asset" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item row-item--bullion">
+							<div class="asset-picker-label">
+								<span class="asset-picker-title">Bullion Metals</span>
+								<div class="asset-picker" id="bullion-picker">
+									<button type="button" class="ap-btn ap-active" data-code="XAU" data-sym="Au" data-name="Gold">
+										<span class="ap-sym">Au</span><span class="ap-name">Gold</span>
+									</button>
+									<button type="button" class="ap-btn" data-code="XAG" data-sym="Ag" data-name="Silver">
+										<span class="ap-sym">Ag</span><span class="ap-name">Silver</span>
+									</button>
+								</div>
+							</div>
+							<div class="field"><span class="cs bullion-cs">Au</span><input type="number" class="fi nw-asset" placeholder="0" min="0" step="0.01"/></div>
+						</div>
+						<div class="row-item row-item--crypto">
+							<div class="asset-picker-label">
+								<span class="asset-picker-title">Digital Assets</span>
+								<div class="asset-picker" id="crypto-picker">
+									<button type="button" class="ap-btn ap-crypto-btn ap-active" data-code="BTC" data-sym="₿" data-name="Bitcoin">
+										<span class="ap-sym">₿</span><span class="ap-name">BTC</span>
+									</button>
+									<button type="button" class="ap-btn ap-crypto-btn" data-code="ETH" data-sym="Ξ" data-name="Ethereum">
+										<span class="ap-sym">Ξ</span><span class="ap-name">ETH</span>
+									</button>
+									<button type="button" class="ap-btn ap-crypto-btn" data-code="SOL" data-sym="◎" data-name="Solana">
+										<span class="ap-sym">◎</span><span class="ap-name">SOL</span>
+									</button>
+								</div>
+							</div>
+							<div class="field"><span class="cs crypto-cs">₿</span><input type="number" class="fi nw-asset" placeholder="0" min="0" step="0.01"/></div>
+						</div>
+					</div>
+					<button class="add-btn" data-list="nw-assets" data-class="nw-asset">+ Add Asset</button>
+					<div class="panel-foot pos-foot"><span>Total Assets</span><span class="fval fpos"><span class="cs">$</span><span id="nw-ta">0</span></span></div>
+				</div>
+				<div class="panel">
+					<div class="panel-head">
+						<div><h3>Liabilities</h3><small>What you owe</small></div>
+						<div class="ptotal pneg"><small>TOTAL</small><span class="cs">$</span><span id="a-liab-hd">0</span></div>
+					</div>
+					<div class="rows-list" id="nw-liabilities">
+						<div class="row-item"><label>Credit Card Debt</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-liability" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Student Loans</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-liability" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Mortgage / Home Loan</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-liability" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Auto / Vehicle Loan</label><div class="field"><span class="cs">$</span><input type="number" class="fi nw-liability" placeholder="0" min="0" step="0.01"/></div></div>
+					</div>
+					<button class="add-btn" data-list="nw-liabilities" data-class="nw-liability">+ Add Liability</button>
+					<div class="panel-foot neg-foot"><span>Total Liabilities</span><span class="fval fneg"><span class="cs">$</span><span id="nw-tl">0</span></span></div>
+				</div>
+			</div>
+			<div class="result-box" id="nw-result">
+				<div class="rbox-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span><span class="rbox-lbl">NET WORTH</span></div>
+				<div class="rbox-body">
+					<div class="big-val"><span class="rcs cs">$</span><span id="nw-value">0</span></div>
+					<p id="nw-tip">Enter your assets and liabilities to calculate net worth.</p>
+				</div>
+			</div>
+			<div class="exp-row"><button class="exp-btn" id="nw-pdf">Export PDF</button><button class="exp-btn" id="nw-csv">Export CSV</button></div>
+		</div>
+	</section>
+
+	<section class="engine-section alt-bg" id="cashflow">
+		<div class="wrap">
+			<div class="engine-header">
+				<span class="engine-tag"><span class="badge-dot pulse"></span> ENGINE B</span>
+				<h2>Monthly Cashflow Balance Calculator</h2>
+				<p>Track your monthly income versus expenses to understand your financial velocity.</p>
+			</div>
+			<div class="concept-box">
+				<h4>Understanding Cashflow</h4>
+				<p>Cashflow measures how money moves in and out of your life every month. <strong>Positive cashflow</strong> means your income exceeds expenses — you have surplus to save or invest. <strong>Negative cashflow</strong> means you spend more than you earn, eroding wealth over time. Tracking monthly cashflow reveals where money leaks, cuts waste, and shows how much can be redirected toward investments or debt repayment each month. This is one of the most powerful habits of financially successful people.</p>
+			</div>
+			<div class="two-col">
+				<div class="panel">
+					<div class="panel-head">
+						<div><h3>Monthly Income</h3><small>What flows in</small></div>
+						<div class="ptotal ppos"><small>TOTAL</small><span class="cs">$</span><span id="cf-inc-hd">0</span></div>
+					</div>
+					<div class="rows-list" id="cf-income">
+						<div class="row-item"><label>Salary / Wages</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-inc" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Freelance / Side Income</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-inc" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Investment Returns</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-inc" placeholder="0" min="0" step="0.01"/></div></div>
+					</div>
+					<button class="add-btn" data-list="cf-income" data-class="cf-inc">+ Add Income</button>
+					<div class="panel-foot pos-foot"><span>Total Monthly Income</span><span class="fval fpos"><span class="cs">$</span><span id="cf-ti">0</span></span></div>
+				</div>
+				<div class="panel">
+					<div class="panel-head">
+						<div><h3>Monthly Expenses</h3><small>What flows out</small></div>
+						<div class="ptotal pneg"><small>TOTAL</small><span class="cs">$</span><span id="cf-exp-hd">0</span></div>
+					</div>
+					<div class="rows-list" id="cf-expenses">
+						<div class="row-item"><label>Rent / Mortgage Payment</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-exp" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Utilities &amp; Bills</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-exp" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Food &amp; Groceries</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-exp" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Transportation</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-exp" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="row-item"><label>Subscriptions</label><div class="field"><span class="cs">$</span><input type="number" class="fi cf-exp" placeholder="0" min="0" step="0.01"/></div></div>
+					</div>
+					<button class="add-btn" data-list="cf-expenses" data-class="cf-exp">+ Add Expense</button>
+					<div class="panel-foot neg-foot"><span>Total Monthly Expenses</span><span class="fval fneg"><span class="cs">$</span><span id="cf-te">0</span></span></div>
+				</div>
+			</div>
+			<div class="result-box" id="cf-result">
+				<div class="rbox-bar"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span><span class="rbox-lbl">MONTHLY CASHFLOW</span></div>
+				<div class="rbox-body">
+					<div class="big-val"><span class="rcs cs">$</span><span id="cf-value">0</span></div>
+					<p id="cf-tip">Enter your income and monthly expenses to calculate cashflow.</p>
+				</div>
+			</div>
+			<div class="exp-row"><button class="exp-btn" id="cf-pdf">Export PDF</button><button class="exp-btn" id="cf-csv">Export CSV</button></div>
+		</div>
+	</section>
+
+	<section class="engine-section" id="projector">
+		<div class="wrap">
+			<div class="engine-header">
+				<span class="engine-tag"><span class="badge-dot pulse"></span> ENGINE C</span>
+				<h2>Interest Calculator &amp; Wealth Generator</h2>
+				<p>Analyze investments with compound growth or calculate simple interest for loans &amp; savings. Responds to the Universal Currency Matrix above.</p>
+			</div>
+			<div class="calc-tabs">
+				<button class="calc-tab active" data-tab="compound">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+					Compound Interest
+				</button>
+				<button class="calc-tab" data-tab="simple">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+					Simple Interest
+				</button>
+			</div>
+
+			<div class="tab-pane" id="tab-compound">
+				<div class="proj-grid">
+					<div class="proj-inputs">
+						<div class="input-card"><h4>Starting Principal</h4><div class="field wide"><span class="cs">$</span><input type="number" id="principal" class="fi proj-inp" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="input-card"><h4>Monthly Contribution</h4><div class="field wide"><span class="cs">$</span><input type="number" id="monthly" class="fi proj-inp" placeholder="0" min="0" step="0.01"/></div></div>
+						<div class="input-card"><h4>Annual Return Rate</h4><div class="field wide"><input type="number" id="rate" class="fi proj-inp" placeholder="7" min="0" max="100" step="0.1"/><span class="sfx">%</span></div></div>
+						<div class="input-card"><h4>Time Horizon</h4><div class="field wide"><input type="number" id="years" class="fi proj-inp" placeholder="10" min="1" max="50" step="1"/><span class="sfx">yrs</span></div></div>
+					</div>
+					<div class="proj-stats">
+						<div class="pstat"><span class="psl">Total Invested</span><span class="psv" id="proj-invested"><span class="cs">$</span>0</span></div>
+						<div class="pstat accent"><span class="psl">Interest Earned</span><span class="psv" id="proj-interest"><span class="cs">$</span>0</span></div>
+						<div class="pstat total"><span class="psl">Future Value</span><span class="psv big" id="proj-future"><span class="cs">$</span>0</span></div>
+					</div>
+				</div>
+				<div class="graph-wrap">
+					<h3 class="graph-title">10-Year Wealth Trajectory</h3>
+					<p class="graph-sub">Consistent monthly contributions at compound growth</p>
+					<div class="canvas-box"><canvas id="chart" width="800" height="300"></canvas></div>
+					<div class="chart-leg">
+						<span class="leg-i"><span class="leg-dot dgray"></span>Principal Invested</span>
+						<span class="leg-i"><span class="leg-dot dgreen"></span>Total with Interest</span>
+					</div>
+					<div class="yr-stats" id="yr-stats"></div>
+				</div>
+			</div>
+
+			<div class="tab-pane" id="tab-simple" hidden>
+				<div class="si-mode-row">
+					<button class="si-mbtn si-active" data-mode="invest">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+						Investment
+					</button>
+					<button class="si-mbtn" data-mode="loan">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+						Loan
+					</button>
+				</div>
+				<div class="concept-box">
+					<h4 id="si-chead">Simple Interest &mdash; Investment Mode</h4>
+					<p id="si-cbody">Calculates interest on the <strong>principal only</strong>. Ideal for fixed deposits, treasury bills, and short-term savings. Formula: <strong>SI = (P &times; R &times; T) / 100</strong></p>
+				</div>
+				<div class="proj-grid">
+					<div class="proj-inputs">
+						<div class="input-card">
+							<h4>Principal Amount</h4>
+							<div class="field wide"><span class="cs">$</span><input id="si-p" type="number" class="fi si-inp" placeholder="0" min="0" step="0.01"/></div>
+						</div>
+						<div class="input-card">
+							<h4>Annual Interest Rate</h4>
+							<div class="field wide"><input id="si-r" type="number" class="fi si-inp" placeholder="5" min="0" max="100" step="0.01"/><span class="sfx">%</span></div>
+						</div>
+						<div class="input-card">
+							<h4>Time Period</h4>
+							<div class="si-trow">
+								<div class="field" style="flex:1;min-width:80px"><input id="si-t" type="number" class="fi si-inp" placeholder="3" min="0.1" step="0.1"/><span class="sfx" id="si-tsfx">yrs</span></div>
+								<div class="si-tunit">
+									<button class="si-tu si-tu-on" data-u="y">Yrs</button>
+									<button class="si-tu" data-u="m">Mo</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="proj-stats">
+						<div class="pstat"><span class="psl">Principal</span><span class="psv" id="sst-p"><span class="cs">$</span>0</span></div>
+						<div class="pstat accent"><span class="psl" id="sst-intlbl">Interest Earned</span><span class="psv" id="sst-int"><span class="cs">$</span>0</span></div>
+						<div class="pstat" id="sst-emi-wrap" style="display:none"><span class="psl">Monthly Installment</span><span class="psv" id="sst-emi"><span class="cs">$</span>0</span></div>
+						<div class="pstat total"><span class="psl" id="sst-totlbl">Total Amount</span><span class="psv big" id="sst-tot"><span class="cs">$</span>0</span></div>
+					</div>
+				</div>
+				<div class="si-fml">
+					<span class="si-fml-lbl">FORMULA</span>
+					<code id="si-fml-eq">SI = (P &times; R &times; T) / 100</code>
+					<code id="si-fml-emi" style="display:none">&nbsp;&nbsp;|&nbsp;&nbsp;Monthly = (P + SI) &divide; Months</code>
+				</div>
+				<div class="exp-row"><button class="exp-btn" id="si-pdf">Export PDF</button><button class="exp-btn" id="si-csv">Export CSV</button></div>
+			</div>
+		</div>
+	</section>
+
+	<section class="support-section" id="support">
+		<div class="wrap">
+			<div class="support-card">
+				<div class="s-icon">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+				</div>
+				<h2>Support This Work &amp; Mission</h2>
+				<p>I built NetWorthCurve.com with one mission: give everyone access to powerful, privacy-first financial tools — completely free and completely client-side.</p>
+				<p>If this platform has helped you understand your finances or take a step toward financial freedom, I would be deeply grateful for your support. Your goodwill contribution of any amount helps cover costs, fund new features, and dedicate more time to improving this service for everyone.</p>
+				<p>Every contribution directly supports the mission of making financial literacy tools accessible worldwide, regardless of income or background.</p>
+				<a href="https://ko-fi.com/H6G5213PK5" target="_blank" rel="noopener noreferrer" class="kofi-btn">
+					<img height="36" style="border:0px;height:36px;" src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" border="0" alt="Buy Me a Coffee at ko-fi.com" />
+				</a>
+				<p class="s-note">No obligation &middot; Any amount appreciated</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="content-section">
+		<div class="content-wrap">
+			<h2>The Mechanics of Wealth Accumulation</h2>
+			<p class="lead">Understanding the fundamental principles of wealth building transforms how you approach financial planning.</p>
+			<h3>Net Worth: Your Financial Snapshot</h3>
+			<p>Net worth is calculated as <strong>Total Assets minus Total Liabilities</strong>. Assets include cash, investments, property. Liabilities include all debts. This single figure is the most honest measure of financial health.</p>
+			<h3>Cashflow: Your Financial Velocity</h3>
+			<p>While net worth is a snapshot, cashflow is the movie. <strong>Monthly Cashflow = Total Income minus Total Expenses</strong>. Consistent positive cashflow invested over time becomes significant wealth.</p>
+			<h3>Compound Interest: The Eighth Wonder</h3>
+			<p>Compound interest generates returns on your returns. Formula: <strong>A = P(1 + r/n)^(nt)</strong> plus monthly contributions. Even modest monthly investments at 7-10% annual returns become life-changing wealth over 20-30 years.</p>
+			<h3>Simple Interest: For Loans &amp; Short-Term Savings</h3>
+			<p>Simple interest is calculated on the principal only — ideal for personal loans, car loans, fixed deposits, and treasury bills. Formula: <strong>SI = (P &times; R &times; T) / 100</strong>. Use the Investment mode to see interest earned, or switch to Loan mode to calculate monthly installments and total repayment on any loan.</p>
+		</div>
+	</section>
+
+	<section class="faq-section">
+		<div class="content-wrap">
+			<h2>Frequently Asked Questions</h2>
+			<details class="faq"><summary>How is net worth different from cashflow?</summary><p>Net worth is a snapshot of total assets minus liabilities at a point in time. Cashflow is how much money moves monthly. You can have high net worth but negative cashflow. Healthy finances need both.</p></details>
+			<details class="faq"><summary>Why no monthly expenses in the Net Worth Calculator?</summary><p>Net worth is a balance sheet concept measuring what you own versus owe. Monthly expenses are a cashflow concept. Mixing them distorts both. Use Engine B for cashflow analysis.</p></details>
+			<details class="faq"><summary>Can I add my own categories?</summary><p>Yes. Every panel has an Add button. Enter a name and a custom row appears. Custom rows have an X button to remove them. Default rows cannot be removed.</p></details>
+			<details class="faq"><summary>How accurate are the compound interest projections?</summary><p>Projections assume consistent returns which markets do not guarantee. Historical S&amp;P 500 averages approximately 10% annually (7% inflation-adjusted). Use for directional planning only.</p></details>
+			<details class="faq"><summary>What is the difference between compound and simple interest?</summary><p>Simple interest is calculated on the original principal only — it does not grow. Compound interest earns returns on both the principal and previously earned interest, resulting in exponential growth. Simple interest is common for short-term loans and fixed deposits; compound interest is used for most investments, savings accounts, and mortgages.</p></details>
+			<details class="faq"><summary>How do I use the Simple Interest calculator for a loan?</summary><p>Switch to Engine C, click the "Simple Interest" tab, then click "Loan" mode. Enter the loan principal, the annual interest rate offered by your lender, and the loan term. The calculator shows total interest payable, total amount to repay, and the monthly installment.</p></details>
+			<details class="faq"><summary>Which currencies are supported?</summary><p>The main currency dropdown supports all 180 national fiat currencies — searchable by name or code (e.g., "Euro" or "USD"). Gold (Au) and Silver (Ag) are selectable directly on the Bullion Metals row inside the Assets panel. Bitcoin (₿), Ethereum (Ξ), and Solana (◎) are selectable on the Digital Assets row in the same panel. All calculations update instantly.</p></details>
+		</div>
+	</section>
+	<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</Layout>
+
+<style>
+.hero-section { position:relative; min-height:88vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; }
+.grid-pattern { position:absolute; inset:0; background-image:linear-gradient(rgba(46,204,113,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(46,204,113,.04) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse at center,black 0%,transparent 70%); }
+.gradient-orb { position:absolute; border-radius:50%; filter:blur(80px); }
+.orb-1 { width:500px; height:500px; top:-150px; left:-100px; background:radial-gradient(circle,rgba(29,122,72,.3) 0%,transparent 70%); }
+.orb-2 { width:400px; height:400px; bottom:-100px; right:-50px; background:radial-gradient(circle,rgba(38,166,93,.2) 0%,transparent 70%); }
+.hero-content { position:relative; z-index:1; text-align:center; padding:2rem 1rem; max-width:800px; }
+.hero-badge { display:inline-flex; align-items:center; gap:.5rem; padding:.4rem 1rem; margin-bottom:1.5rem; background:rgba(20,90,52,.3); border:1px solid rgba(46,204,113,.3); border-radius:20px; }
+.badge-dot { width:6px; height:6px; background:var(--emerald-500); border-radius:50%; }
+.badge-dot.pulse { animation:pulse-glow 2s ease-in-out infinite; }
+.badge-text { font-family:var(--font-mono); font-size:.72rem; font-weight:600; color:var(--emerald-300); letter-spacing:.1em; text-transform:uppercase; }
+.hero-title { font-size:clamp(2rem,7vw,3.8rem); font-weight:700; line-height:1.1; margin-bottom:1.2rem; }
+.title-line { display:block; }
+.title-line.accent { background:linear-gradient(135deg,var(--emerald-400),var(--mint-400)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-subtitle { font-size:clamp(.9rem,2vw,1.1rem); color:var(--charcoal-300); max-width:480px; margin:0 auto 2rem; }
+.hero-metrics { display:flex; justify-content:center; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+.metric { text-align:center; }
+.metric-value { display:block; font-size:1.8rem; font-weight:700; font-family:var(--font-mono); color:var(--emerald-400); }
+.metric-label { font-size:.68rem; color:var(--charcoal-400); text-transform:uppercase; letter-spacing:.1em; }
+.metric-divider { width:1px; height:32px; background:linear-gradient(180deg,transparent,var(--charcoal-500),transparent); }
+.scroll-hint { position:absolute; bottom:1.5rem; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:.5rem; font-size:.65rem; color:var(--charcoal-400); text-transform:uppercase; letter-spacing:.2em; }
+.scroll-hint svg { width:20px; height:20px; color:var(--emerald-500); animation:bounce 2s ease-in-out infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+.currency-section { padding:2.5rem 0; border-bottom:1px solid var(--charcoal-700); background:var(--charcoal-900); }
+.wrap { max-width:1100px; margin:0 auto; padding:0 1rem; }
+.section-label { text-align:center; font-family:var(--font-mono); font-size:.68rem; font-weight:600; color:var(--charcoal-400); letter-spacing:.18em; margin-bottom:.6rem; }
+.cur-instruction { text-align:center; font-size:.82rem; color:var(--charcoal-400); margin-bottom:1.25rem; line-height:1.5; }
+
+/* Searchable currency dropdown */
+.cur-dropdown-wrap { position:relative; max-width:400px; margin:0 auto; }
+.cur-trigger { display:flex; align-items:center; gap:0; width:100%; padding:0; background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:10px; cursor:pointer; transition:border-color .2s, box-shadow .2s; text-align:left; overflow:hidden; }
+.cur-trigger:hover { border-color:var(--emerald-600); }
+.cur-trigger[aria-expanded="true"] { border-color:var(--emerald-500); box-shadow:0 0 0 3px rgba(46,204,113,.12); }
+.cur-t-sym { display:flex; align-items:center; justify-content:center; min-width:52px; padding:.85rem .9rem; font-size:1.3rem; font-weight:700; color:var(--emerald-400); background:var(--charcoal-750,rgba(0,0,0,.25)); flex-shrink:0; line-height:1; }
+.cur-t-divider { width:1px; background:var(--charcoal-600); align-self:stretch; flex-shrink:0; }
+.cur-t-info { flex:1; display:flex; flex-direction:column; justify-content:center; padding:.7rem .9rem; min-width:0; gap:.25rem; }
+.cur-t-name { font-size:.88rem; font-weight:600; color:var(--charcoal-100); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.2; }
+.cur-t-code { display:inline-block; font-size:.62rem; font-family:var(--font-mono); font-weight:700; color:var(--emerald-400); background:rgba(46,204,113,.12); border:1px solid rgba(46,204,113,.2); padding:.15rem .45rem; border-radius:4px; letter-spacing:.08em; width:fit-content; }
+.cur-chevron { color:var(--charcoal-400); flex-shrink:0; margin-right:.9rem; transition:transform .2s; }
+.cur-trigger[aria-expanded="true"] .cur-chevron { transform:rotate(180deg); }
+
+.cur-panel { position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:12px; box-shadow:0 16px 48px rgba(0,0,0,.55); z-index:200; overflow:hidden; }
+.cur-panel[hidden] { display:none; }
+.cur-search-wrap { display:flex; align-items:center; gap:.6rem; padding:.7rem 1rem; border-bottom:1px solid var(--charcoal-700); background:var(--charcoal-850); }
+.cur-search-icon { color:var(--charcoal-500); flex-shrink:0; }
+.cur-search { flex:1; background:transparent; border:none; outline:none; color:#fff; font-size:.84rem; font-family:var(--font-display); }
+.cur-search::placeholder { color:var(--charcoal-500); }
+
+.cur-list { max-height:320px; overflow-y:auto; padding:.4rem 0; }
+.cur-list::-webkit-scrollbar { width:4px; }
+.cur-list::-webkit-scrollbar-track { background:transparent; }
+.cur-list::-webkit-scrollbar-thumb { background:var(--charcoal-600); border-radius:2px; }
+.cur-no-results { padding:1.5rem; text-align:center; font-size:.82rem; color:var(--charcoal-500); }
+
+.cur-option { display:flex; align-items:center; padding:.6rem 1rem; cursor:pointer; transition:background .12s; }
+.cur-option:hover { background:rgba(46,204,113,.07); }
+.cur-option.selected { background:rgba(46,204,113,.12); }
+.cur-opt-sym { width:38px; flex-shrink:0; font-size:1rem; font-weight:700; color:var(--emerald-400); font-family:var(--font-mono); }
+.cur-opt-name { flex:1; font-size:.83rem; color:var(--charcoal-200); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:1rem; }
+.cur-opt-code { font-size:.72rem; font-family:var(--font-mono); font-weight:600; color:var(--charcoal-500); width:38px; text-align:right; flex-shrink:0; letter-spacing:.04em; }
+
+.engine-section { padding:4rem 0; border-bottom:1px solid var(--charcoal-700); }
+.alt-bg { background:rgba(0,0,0,.15); }
+.engine-header { text-align:center; margin-bottom:2.5rem; }
+.engine-tag { display:inline-flex; align-items:center; gap:.5rem; padding:3px 12px; background:rgba(20,90,52,.3); border:1px solid rgba(46,204,113,.2); border-radius:4px; font-family:var(--font-mono); font-size:.68rem; font-weight:700; color:var(--emerald-400); letter-spacing:.1em; margin-bottom:.75rem; }
+.engine-header h2 { font-size:clamp(1.3rem,3.5vw,1.75rem); margin-bottom:.6rem; }
+.engine-header p { font-size:.92rem; color:var(--charcoal-300); max-width:580px; margin:0 auto; }
+
+.two-col { display:grid; grid-template-columns:1fr; gap:1.25rem; }
+@media(min-width:768px){.two-col{grid-template-columns:1fr 1fr;}}
+
+.panel { background:var(--charcoal-850); border:1px solid var(--charcoal-600); border-radius:14px; overflow:hidden; }
+.panel-head { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; background:var(--charcoal-800); border-bottom:1px solid var(--charcoal-700); }
+.panel-head h3 { font-size:.95rem; font-weight:600; margin:0; }
+.panel-head small { font-size:.68rem; color:var(--charcoal-400); }
+.ptotal { text-align:right; font-family:var(--font-mono); font-size:.95rem; font-weight:700; }
+.ptotal small { display:block; font-size:.58rem; color:var(--charcoal-500); text-transform:uppercase; letter-spacing:.1em; font-family:var(--font-display); }
+.ppos { color:var(--emerald-400); }
+.pneg { color:var(--crimson-400); }
+
+.rows-list { padding:.75rem; }
+.row-item { position:relative; display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.6rem .75rem; background:var(--charcoal-900); border:1px solid var(--charcoal-700); border-radius:7px; margin-bottom:.5rem; transition:border-color .15s; }
+.row-item:focus-within { border-color:var(--emerald-500); }
+.row-item label { font-size:.8rem; color:var(--charcoal-200); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.row-item.custom-row label { padding-right:.25rem; }
+.rm-btn { position:absolute; top:50%; right:-.5rem; transform:translateY(-50%); width:18px; height:18px; display:flex; align-items:center; justify-content:center; background:var(--charcoal-700); border:1px solid var(--charcoal-600); border-radius:50%; color:var(--charcoal-400); cursor:pointer; font-size:.65rem; font-weight:700; line-height:1; flex-shrink:0; opacity:0; transition:all .15s; z-index:2; }
+.row-item.custom-row:hover .rm-btn { opacity:1; right:-.5rem; }
+.row-item.custom-row:focus-within .rm-btn { opacity:0; pointer-events:none; }
+.rm-btn:hover { background:rgba(192,57,43,.3); border-color:var(--crimson-600); color:var(--crimson-400); transform:translateY(-50%) scale(1.1); }.field { display:flex; align-items:center; background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:5px; min-width:115px; }
+.field.wide { width:100%; min-width:0; }
+.cs { padding:6px 8px; font-family:var(--font-mono); font-weight:600; font-size:.82rem; color:var(--emerald-500); background:var(--charcoal-700); flex-shrink:0; }
+.sfx { padding:6px 8px; font-family:var(--font-mono); font-size:.78rem; color:var(--charcoal-400); background:var(--charcoal-700); flex-shrink:0; }
+.fi { flex:1; padding:7px; background:transparent; border:none; color:#fff; font-family:var(--font-mono); font-size:.88rem; font-weight:500; outline:none; text-align:right; min-width:60px; }
+.fi::placeholder { color:var(--charcoal-500); }
+.fi::-webkit-outer-spin-button,.fi::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+
+.add-btn { width:calc(100% - 1.5rem); margin:0 .75rem .75rem; padding:.55rem; background:transparent; border:1px dashed var(--charcoal-500); border-radius:7px; color:var(--emerald-400); font-size:.78rem; font-weight:600; cursor:pointer; transition:all .15s; }
+.add-btn:hover { border-color:var(--emerald-500); background:rgba(46,204,113,.04); }
+
+.panel-foot { display:flex; align-items:center; justify-content:space-between; padding:.75rem 1.2rem; border-top:1px solid var(--charcoal-700); }
+.pos-foot { background:rgba(46,204,113,.05); border-top-color:rgba(46,204,113,.2); }
+.neg-foot { background:rgba(192,57,43,.05); border-top-color:rgba(192,57,43,.2); }
+.panel-foot > span:first-child { font-size:.8rem; font-weight:600; color:var(--charcoal-300); }
+.fval { font-family:var(--font-mono); font-size:1.05rem; font-weight:700; }
+.fpos { color:var(--emerald-400); }
+.fneg { color:var(--crimson-400); }
+
+.result-box { margin-top:1.5rem; background:var(--charcoal-900); border:1px solid var(--charcoal-600); border-radius:14px; overflow:hidden; transition:all .2s; }
+.result-box.positive { border-color:var(--emerald-600); box-shadow:0 0 25px rgba(46,204,113,.12); }
+.result-box.negative { border-color:var(--crimson-600); box-shadow:0 0 25px rgba(192,57,43,.12); }
+.rbox-bar { display:flex; align-items:center; gap:.5rem; padding:.7rem 1rem; background:var(--charcoal-850); border-bottom:1px solid var(--charcoal-700); }
+.dot-r { width:10px; height:10px; border-radius:50%; background:#ff5f56; }
+.dot-y { width:10px; height:10px; border-radius:50%; background:#ffbd2e; }
+.dot-g { width:10px; height:10px; border-radius:50%; background:#27ca40; }
+.rbox-lbl { margin-left:auto; font-family:var(--font-mono); font-size:.62rem; font-weight:600; color:var(--charcoal-400); letter-spacing:.15em; }
+.rbox-body { padding:2rem; text-align:center; }
+.big-val { display:flex; align-items:baseline; justify-content:center; gap:.5rem; margin-bottom:1rem; }
+.rcs { font-size:1.3rem; color:var(--charcoal-400); }
+.big-val > span:last-child { font-family:var(--font-mono); font-size:clamp(1.8rem,5vw,2.8rem); font-weight:700; color:var(--charcoal-100); }
+.result-box.positive .big-val > span:last-child { color:var(--emerald-400); }
+.result-box.negative .big-val > span:last-child { color:var(--crimson-400); }
+.rbox-body p { font-size:.85rem; color:var(--charcoal-400); max-width:480px; margin:0 auto; line-height:1.5; }
+
+.exp-row { display:flex; gap:.75rem; justify-content:center; margin-top:1.2rem; flex-wrap:wrap; }
+.exp-btn { padding:.55rem 1.4rem; background:var(--charcoal-800); border:1px solid var(--charcoal-500); border-radius:7px; color:var(--charcoal-200); font-size:.82rem; font-weight:600; cursor:pointer; transition:all .15s; }
+.exp-btn:hover { border-color:var(--emerald-500); color:var(--emerald-400); }
+
+.concept-box { padding:1.25rem 1.5rem; margin-bottom:1.75rem; background:rgba(46,204,113,.05); border:1px solid rgba(46,204,113,.18); border-radius:10px; }
+.concept-box h4 { font-size:.92rem; color:var(--emerald-300); margin:0 0 .6rem; }
+.concept-box p { font-size:.88rem; color:var(--charcoal-200); line-height:1.7; margin:0; }
+.concept-box strong { color:#fff; }
+
+.proj-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; }
+@media(min-width:900px){.proj-grid{grid-template-columns:1fr 1fr; align-items:start;}}
+.proj-inputs { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+@media(max-width:480px){.proj-inputs{grid-template-columns:1fr;}}
+.input-card { background:var(--charcoal-850); border:1px solid var(--charcoal-600); border-radius:10px; padding:1rem; }
+.input-card h4 { font-size:.82rem; font-weight:600; color:var(--charcoal-200); margin:0 0 .6rem; }
+.proj-stats { display:flex; flex-direction:column; gap:.75rem; }
+.pstat { padding:1.2rem; background:var(--charcoal-850); border:1px solid var(--charcoal-700); border-radius:10px; text-align:center; }
+.pstat.accent { border-color:rgba(46,204,113,.3); background:rgba(46,204,113,.05); }
+.pstat.total { background:var(--emerald-900); border-color:var(--emerald-700); }
+.psl { display:block; font-size:.68rem; color:var(--charcoal-400); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.4rem; }
+.psv { font-family:var(--font-mono); font-size:1.3rem; font-weight:700; color:#fff; }
+.pstat.accent .psv { color:var(--emerald-400); }
+.pstat.total .psv { color:var(--emerald-300); }
+.psv.big { font-size:1.6rem; }
+
+.graph-wrap { margin-top:2.5rem; background:var(--charcoal-850); border:1px solid var(--charcoal-600); border-radius:14px; padding:1.5rem; }
+.graph-title { font-size:1.15rem; text-align:center; margin:0 0 .4rem; }
+.graph-sub { font-size:.8rem; color:var(--charcoal-400); text-align:center; margin:0 0 1.2rem; }
+.canvas-box { background:var(--charcoal-900); border:1px solid var(--charcoal-700); border-radius:8px; padding:.75rem; margin-bottom:1rem; overflow-x:auto; }
+#chart { width:100%; height:300px; display:block; }
+.chart-leg { display:flex; justify-content:center; gap:1.5rem; margin-bottom:1rem; flex-wrap:wrap; }
+.leg-i { display:flex; align-items:center; gap:.4rem; font-size:.78rem; color:var(--charcoal-300); }
+.leg-dot { width:12px; height:12px; border-radius:3px; }
+.dgray { background:var(--charcoal-400); }
+.dgreen { background:var(--emerald-500); }
+.yr-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); gap:.4rem; }
+.ys { text-align:center; padding:.5rem .4rem; background:var(--charcoal-800); border:1px solid var(--charcoal-700); border-radius:6px; }
+.ys-yr { display:block; font-size:.58rem; color:var(--charcoal-500); text-transform:uppercase; }
+.ys-val { font-family:var(--font-mono); font-size:.72rem; font-weight:600; color:var(--emerald-400); }
+
+.support-section { padding:4rem 0; }
+.support-card { max-width:640px; margin:0 auto; text-align:center; padding:2.5rem 2rem; background:var(--charcoal-850); border:1px solid var(--charcoal-600); border-radius:16px; }
+.s-icon { width:52px; height:52px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--emerald-800),var(--emerald-700)); border-radius:50%; margin:0 auto 1.2rem; }
+.s-icon svg { width:26px; height:26px; color:var(--emerald-300); }
+.support-card h2 { font-size:1.35rem; margin:0 0 1rem; }
+.support-card p { font-size:.88rem; color:var(--charcoal-200); line-height:1.75; margin:0 0 .9rem; }
+.kofi-btn { display:inline-flex; align-items:center; text-decoration:none; transition:transform .2s; margin:.5rem 0; }
+.kofi-btn:hover { transform:translateY(-2px); }
+.s-note { font-size:.72rem; color:var(--charcoal-500); margin:0; }
+
+.content-section,.faq-section { padding:3.5rem 0; border-top:1px solid var(--charcoal-700); }
+.content-wrap { max-width:720px; margin:0 auto; padding:0 1rem; }
+.content-wrap h2 { font-size:clamp(1.2rem,3vw,1.6rem); margin:0 0 1.2rem; }
+.content-wrap h3 { font-size:1.05rem; color:var(--emerald-300); margin:2rem 0 .6rem; }
+.lead { font-size:1rem; color:var(--charcoal-100); line-height:1.8; margin-bottom:1.5rem; }
+.content-wrap p { font-size:.9rem; color:var(--charcoal-200); line-height:1.8; margin:0 0 1rem; }
+.content-wrap strong { color:#fff; }
+
+.faq { background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:8px; margin-bottom:.6rem; overflow:hidden; }
+.faq[open] { border-color:var(--emerald-700); }
+.faq summary { padding:.9rem 1rem; font-size:.88rem; font-weight:600; color:var(--charcoal-100); cursor:pointer; list-style:none; }
+.faq summary::-webkit-details-marker { display:none; }
+.faq[open] summary { color:var(--emerald-300); }
+.faq p { padding:0 1rem .9rem; font-size:.85rem; color:var(--charcoal-300); line-height:1.65; margin:0; }
+
+/* Engine C tabs */
+.calc-tabs { display:flex; gap:.4rem; margin-bottom:1.75rem; background:var(--charcoal-800); padding:.3rem; border-radius:10px; border:1px solid var(--charcoal-600); width:fit-content; margin-left:auto; margin-right:auto; }
+.calc-tab { display:inline-flex; align-items:center; gap:.45rem; padding:.5rem 1.4rem; background:transparent; border:none; border-radius:7px; color:var(--charcoal-300); font-size:.84rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:var(--font-display); }
+.calc-tab.active { background:var(--emerald-800); color:#fff; box-shadow:0 2px 10px rgba(46,204,113,.25); }
+.calc-tab:hover:not(.active) { color:var(--emerald-300); }
+.tab-pane[hidden] { display:none; }
+
+/* Simple Interest mode row */
+.si-mode-row { display:flex; gap:.5rem; justify-content:center; margin-bottom:1.25rem; }
+.si-mbtn { display:inline-flex; align-items:center; gap:.45rem; padding:.55rem 1.4rem; background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:8px; color:var(--charcoal-300); font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:var(--font-display); }
+.si-mbtn.si-active { background:var(--emerald-800); border-color:var(--emerald-600); color:#fff; }
+.si-mbtn:hover:not(.si-active) { border-color:var(--emerald-600); color:var(--emerald-300); }
+
+/* SI time period row */
+.si-trow { display:flex; align-items:center; gap:.5rem; }
+.si-tunit { display:flex; border-radius:6px; overflow:hidden; border:1px solid var(--charcoal-600); flex-shrink:0; }
+.si-tu { padding:.38rem .65rem; background:var(--charcoal-800); border:none; color:var(--charcoal-400); font-size:.7rem; font-weight:600; cursor:pointer; transition:all .15s; font-family:var(--font-display); }
+.si-tu.si-tu-on { background:var(--emerald-800); color:#fff; }
+.si-tu:hover:not(.si-tu-on) { color:var(--emerald-400); }
+
+/* SI formula bar */
+.si-fml { display:flex; align-items:center; gap:.75rem; margin-top:1.5rem; padding:.9rem 1.25rem; background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:10px; flex-wrap:wrap; }
+.si-fml-lbl { font-family:var(--font-mono); font-size:.6rem; font-weight:700; color:var(--emerald-400); letter-spacing:.15em; flex-shrink:0; }
+.si-fml code { font-family:var(--font-mono); font-size:.88rem; color:var(--charcoal-100); }
+
+/* Asset picker rows (bullion & crypto) */
+.row-item--bullion, .row-item--crypto { align-items:flex-start; flex-wrap:wrap; gap:.5rem .75rem; }
+.asset-picker-label { flex:1; min-width:0; display:flex; flex-direction:column; gap:.45rem; }
+.asset-picker-title { font-size:.72rem; font-weight:700; color:var(--charcoal-400); text-transform:uppercase; letter-spacing:.1em; }
+.asset-picker { display:flex; gap:.35rem; flex-wrap:wrap; }
+.ap-btn { display:inline-flex; align-items:center; gap:.35rem; padding:.3rem .65rem; background:var(--charcoal-800); border:1px solid var(--charcoal-600); border-radius:20px; cursor:pointer; transition:all .15s; font-family:var(--font-display); }
+.ap-sym { font-family:var(--font-mono); font-size:.78rem; font-weight:700; }
+.ap-name { font-size:.7rem; font-weight:600; color:var(--charcoal-300); }
+
+/* Bullion active state — amber/gold */
+.row-item--bullion .ap-btn { border-color:var(--charcoal-600); }
+.row-item--bullion .ap-btn .ap-sym { color:#f59e0b; }
+.row-item--bullion .ap-btn.ap-active { background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.5); }
+.row-item--bullion .ap-btn.ap-active .ap-sym { color:#fbbf24; }
+.row-item--bullion .ap-btn.ap-active .ap-name { color:#fde68a; }
+.row-item--bullion .ap-btn:hover:not(.ap-active) { border-color:rgba(245,158,11,.35); }
+.bullion-cs { color:#f59e0b !important; background:rgba(245,158,11,.12) !important; min-width:38px; text-align:center; }
+
+/* Crypto active state — sky blue */
+.row-item--crypto .ap-btn .ap-sym { color:#60a5fa; }
+.row-item--crypto .ap-btn.ap-active { background:rgba(96,165,250,.1); border-color:rgba(96,165,250,.45); }
+.row-item--crypto .ap-btn.ap-active .ap-sym { color:#93c5fd; }
+.row-item--crypto .ap-btn.ap-active .ap-name { color:#bfdbfe; }
+.row-item--crypto .ap-btn:hover:not(.ap-active) { border-color:rgba(96,165,250,.35); }
+.crypto-cs { color:#60a5fa !important; background:rgba(96,165,250,.1) !important; min-width:30px; text-align:center; }
+
+@media(max-width:640px){
+.hero-metrics{flex-direction:column;gap:1rem;}
+.metric-divider{width:40px;height:1px;}
+.cur-dropdown-wrap{max-width:100%;}
+.row-item--bullion,.row-item--crypto{flex-direction:column;}
+.row-item--bullion .field,.row-item--crypto .field{width:100%;}
+.row-item{flex-wrap:wrap;gap:.5rem;}
+.row-item label{flex:1 0 100%;}
+.field{width:100%;}
+.exp-row{flex-direction:column;align-items:stretch;}
+.exp-btn{text-align:center;}
+.proj-inputs{grid-template-columns:1fr;}
+.support-card{padding:1.5rem 1rem;}
+}
+
+/* Light mode overrides — neutral white/gray backgrounds, near-black text, green accents */
+html.light-mode .hero-title { color:#101214; }
+html.light-mode .title-line.accent { background:linear-gradient(135deg,#16a34a,#22c55e); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+html.light-mode .hero-subtitle { color:#343a40; }
+html.light-mode .metric-value { color:#16a34a; }
+html.light-mode .metric-label { color:#495057; }
+html.light-mode .scroll-hint { color:#495057; }
+html.light-mode .currency-section { background:#f1f3f5; border-bottom-color:#dee2e6; }
+html.light-mode .cur-instruction { color:#6c757d; }
+html.light-mode .cur-trigger { background:#fff; border-color:#dee2e6; }
+html.light-mode .cur-trigger:hover { border-color:#16a34a; }
+html.light-mode .cur-trigger[aria-expanded="true"] { border-color:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.1); }
+html.light-mode .cur-t-sym { color:#16a34a; background:#f0fdf4; }
+html.light-mode .cur-t-divider { background:#dee2e6; }
+html.light-mode .cur-t-name { color:#212529; }
+html.light-mode .cur-t-code { color:#15803d; background:rgba(22,163,74,.08); border-color:rgba(22,163,74,.2); }
+html.light-mode .cur-chevron { color:#868e96; }
+html.light-mode .cur-panel { background:#fff; border-color:#dee2e6; box-shadow:0 16px 48px rgba(0,0,0,.1); }
+html.light-mode .cur-search-wrap { background:#f8f9fa; border-bottom-color:#e9ecef; }
+html.light-mode .cur-search { color:#212529; }
+html.light-mode .cur-search::placeholder { color:#adb5bd; }
+html.light-mode .cur-search-icon { color:#adb5bd; }
+html.light-mode .cur-option:hover { background:rgba(22,163,74,.06); }
+html.light-mode .cur-option.selected { background:rgba(22,163,74,.1); }
+html.light-mode .cur-opt-sym { color:#16a34a; }
+html.light-mode .cur-opt-name { color:#212529; }
+html.light-mode .cur-opt-code { color:#adb5bd; }
+html.light-mode .cur-no-results { color:#adb5bd; }
+html.light-mode .asset-picker-title { color:#868e96; }
+html.light-mode .ap-btn { background:#fff; border-color:#dee2e6; }
+html.light-mode .ap-name { color:#495057; }
+html.light-mode .row-item--bullion .ap-btn .ap-sym { color:#d97706; }
+html.light-mode .row-item--bullion .ap-btn.ap-active { background:rgba(217,119,6,.08); border-color:rgba(217,119,6,.4); }
+html.light-mode .row-item--bullion .ap-btn.ap-active .ap-sym { color:#b45309; }
+html.light-mode .row-item--bullion .ap-btn.ap-active .ap-name { color:#92400e; }
+html.light-mode .bullion-cs { color:#b45309 !important; background:rgba(217,119,6,.08) !important; }
+html.light-mode .row-item--crypto .ap-btn .ap-sym { color:#2563eb; }
+html.light-mode .row-item--crypto .ap-btn.ap-active { background:rgba(37,99,235,.08); border-color:rgba(37,99,235,.35); }
+html.light-mode .row-item--crypto .ap-btn.ap-active .ap-sym { color:#1d4ed8; }
+html.light-mode .row-item--crypto .ap-btn.ap-active .ap-name { color:#1e40af; }
+html.light-mode .crypto-cs { color:#2563eb !important; background:rgba(37,99,235,.07) !important; }
+html.light-mode .engine-section { background:#ffffff; }
+html.light-mode .alt-bg { background:#f8f9fa; }
+html.light-mode .engine-header h2 { color:#101214; }
+html.light-mode .engine-header p { color:#343a40; }
+html.light-mode .engine-tag { background:rgba(22,163,74,.08); border-color:rgba(22,163,74,.2); color:#16a34a; }
+html.light-mode .panel { background:#fff; border-color:#dee2e6; }
+html.light-mode .panel-head { background:#f8f9fa; border-bottom-color:#dee2e6; }
+html.light-mode .panel-head h3 { color:#101214; }
+html.light-mode .panel-head small { color:#868e96; }
+html.light-mode .ptotal small { color:#868e96; }
+html.light-mode .ppos { color:#16a34a; }
+html.light-mode .pneg { color:#dc2626; }
+html.light-mode .row-item { background:#ffffff; border-color:#e9ecef; }
+html.light-mode .row-item:focus-within { border-color:#16a34a; }
+html.light-mode .row-item label { color:#212529; }
+html.light-mode .field { background:#f8f9fa; border-color:#dee2e6; }
+html.light-mode .cs { background:#e9ecef; color:#16a34a; }
+html.light-mode .sfx { background:#e9ecef; color:#495057; }
+html.light-mode .fi { color:#101214; }
+html.light-mode .panel-foot { border-top-color:#e9ecef; }
+html.light-mode .pos-foot { background:rgba(22,163,74,.04); border-top-color:rgba(22,163,74,.15); }
+html.light-mode .neg-foot { background:rgba(220,38,38,.03); border-top-color:rgba(220,38,38,.15); }
+html.light-mode .panel-foot > span:first-child { color:#343a40; }
+html.light-mode .fval { font-weight:700; }
+html.light-mode .fpos { color:#16a34a; }
+html.light-mode .fneg { color:#dc2626; }
+html.light-mode .result-box { background:#fff; border-color:#dee2e6; }
+html.light-mode .result-box.positive { border-color:#16a34a; box-shadow:0 0 20px rgba(22,163,74,.08); }
+html.light-mode .result-box.negative { border-color:#dc2626; box-shadow:0 0 20px rgba(220,38,38,.08); }
+html.light-mode .rbox-bar { background:#f8f9fa; border-bottom-color:#e9ecef; }
+html.light-mode .rbox-lbl { color:#868e96; }
+html.light-mode .rcs { color:#868e96; }
+html.light-mode .big-val > span:last-child { color:#101214; }
+html.light-mode .result-box.positive .big-val > span:last-child { color:#16a34a; }
+html.light-mode .result-box.negative .big-val > span:last-child { color:#dc2626; }
+html.light-mode .rbox-body p { color:#495057; }
+html.light-mode .exp-btn { background:#fff; border-color:#dee2e6; color:#212529; }
+html.light-mode .exp-btn:hover { border-color:#16a34a; color:#16a34a; }
+html.light-mode .add-btn { border-color:#ced4da; color:#16a34a; }
+html.light-mode .rm-btn { background:#f1f3f5; border-color:#ced4da; color:#868e96; }
+html.light-mode .rm-btn:hover { background:rgba(220,38,38,.1); border-color:#dc2626; color:#dc2626; }
+html.light-mode .concept-box { background:#f0fdf4; border-color:#bbf7d0; }
+html.light-mode .concept-box h4 { color:#15803d; }
+html.light-mode .concept-box p { color:#212529; }
+html.light-mode .concept-box strong { color:#101214; }
+html.light-mode .input-card { background:#fff; border-color:#dee2e6; }
+html.light-mode .input-card h4 { color:#212529; }
+html.light-mode .pstat { background:#fff; border-color:#dee2e6; }
+html.light-mode .pstat.accent { background:#f0fdf4; border-color:#bbf7d0; }
+html.light-mode .pstat.total { background:#f0fdf4; border-color:#16a34a; }
+html.light-mode .psl { color:#868e96; }
+html.light-mode .psv { color:#101214; }
+html.light-mode .pstat.accent .psv { color:#16a34a; }
+html.light-mode .pstat.total .psv { color:#15803d; }
+html.light-mode .graph-wrap { background:#fff; border-color:#dee2e6; }
+html.light-mode .graph-title { color:#101214; }
+html.light-mode .graph-sub { color:#868e96; }
+html.light-mode .canvas-box { background:#f8f9fa; border-color:#e9ecef; }
+html.light-mode .leg-i { color:#343a40; }
+html.light-mode .ys { background:#f1f3f5; border-color:#dee2e6; }
+html.light-mode .ys-yr { color:#868e96; }
+html.light-mode .ys-val { color:#16a34a; }
+html.light-mode .support-section { background:#f8f9fa; }
+html.light-mode .support-card { background:#fff; border-color:#dee2e6; }
+html.light-mode .support-card h2 { color:#101214; }
+html.light-mode .support-card p { color:#343a40; }
+html.light-mode .s-note { color:#868e96; }
+html.light-mode .content-section, html.light-mode .faq-section { border-top-color:#dee2e6; }
+html.light-mode .content-wrap h2 { color:#101214; }
+html.light-mode .content-wrap h3 { color:#16a34a; }
+html.light-mode .lead { color:#212529; }
+html.light-mode .content-wrap p { color:#343a40; }
+html.light-mode .content-wrap strong { color:#101214; }
+html.light-mode .faq { background:#fff; border-color:#dee2e6; }
+html.light-mode .faq[open] { border-color:#16a34a; }
+html.light-mode .faq summary { color:#212529; }
+html.light-mode .faq[open] summary { color:#16a34a; }
+html.light-mode .faq p { color:#343a40; }
+html.light-mode .badge-text { color:#16a34a; }
+html.light-mode .badge-dot { background:#16a34a; }
+html.light-mode .hero-badge { background:rgba(22,163,74,.06); border-color:rgba(22,163,74,.2); }
+html.light-mode .section-label { color:#868e96; }
+html.light-mode .kofi-btn:hover { filter: brightness(1.05); }
+html.light-mode .calc-tabs { background:#f1f3f5; border-color:#dee2e6; }
+html.light-mode .calc-tab { color:#495057; }
+html.light-mode .calc-tab.active { background:#16a34a; color:#fff; }
+html.light-mode .calc-tab:hover:not(.active) { color:#15803d; }
+html.light-mode .si-mbtn { background:#fff; border-color:#dee2e6; color:#495057; }
+html.light-mode .si-mbtn.si-active { background:#16a34a; border-color:#15803d; color:#fff; }
+html.light-mode .si-mbtn:hover:not(.si-active) { border-color:#16a34a; color:#15803d; }
+html.light-mode .si-tunit { border-color:#dee2e6; }
+html.light-mode .si-tu { background:#f8f9fa; color:#868e96; }
+html.light-mode .si-tu.si-tu-on { background:#16a34a; color:#fff; }
+html.light-mode .si-fml { background:#f8f9fa; border-color:#dee2e6; }
+html.light-mode .si-fml code { color:#212529; }
+</style>
+
+<script>
+const CURRENCY_DATA = {
+  fiat: [
+    {code:'AED',name:'UAE Dirham',sym:'AED'},{code:'AFN',name:'Afghan Afghani',sym:'Af'},{code:'ALL',name:'Albanian Lek',sym:'L'},
+    {code:'AMD',name:'Armenian Dram',sym:'AMD'},{code:'ANG',name:'Netherlands Antillean Guilder',sym:'ƒ'},{code:'AOA',name:'Angolan Kwanza',sym:'Kz'},
+    {code:'ARS',name:'Argentine Peso',sym:'$'},{code:'AUD',name:'Australian Dollar',sym:'A$'},{code:'AWG',name:'Aruban Florin',sym:'ƒ'},
+    {code:'AZN',name:'Azerbaijani Manat',sym:'₼'},{code:'BAM',name:'Bosnia-Herzegovina Convertible Mark',sym:'KM'},{code:'BBD',name:'Barbadian Dollar',sym:'Bds$'},
+    {code:'BDT',name:'Bangladeshi Taka',sym:'৳'},{code:'BGN',name:'Bulgarian Lev',sym:'лв'},{code:'BHD',name:'Bahraini Dinar',sym:'BD'},
+    {code:'BIF',name:'Burundian Franc',sym:'Fr'},{code:'BMD',name:'Bermudian Dollar',sym:'BD$'},{code:'BND',name:'Brunei Dollar',sym:'B$'},
+    {code:'BOB',name:'Bolivian Boliviano',sym:'Bs'},{code:'BRL',name:'Brazilian Real',sym:'R$'},{code:'BSD',name:'Bahamian Dollar',sym:'B$'},
+    {code:'BTN',name:'Bhutanese Ngultrum',sym:'Nu'},{code:'BWP',name:'Botswana Pula',sym:'P'},{code:'BYN',name:'Belarusian Ruble',sym:'Br'},
+    {code:'BZD',name:'Belize Dollar',sym:'BZ$'},{code:'CAD',name:'Canadian Dollar',sym:'C$'},{code:'CDF',name:'Congolese Franc',sym:'Fr'},
+    {code:'CHF',name:'Swiss Franc',sym:'Fr.'},{code:'CLP',name:'Chilean Peso',sym:'CLP$'},{code:'CNY',name:'Chinese Yuan',sym:'CN¥'},
+    {code:'COP',name:'Colombian Peso',sym:'COP$'},{code:'CRC',name:'Costa Rican Colón',sym:'₡'},{code:'CUP',name:'Cuban Peso',sym:'$MN'},
+    {code:'CVE',name:'Cape Verdean Escudo',sym:'$'},{code:'CZK',name:'Czech Koruna',sym:'Kč'},{code:'DJF',name:'Djiboutian Franc',sym:'Fr'},
+    {code:'DKK',name:'Danish Krone',sym:'kr'},{code:'DOP',name:'Dominican Peso',sym:'RD$'},{code:'DZD',name:'Algerian Dinar',sym:'DA'},
+    {code:'EGP',name:'Egyptian Pound',sym:'E£'},{code:'ERN',name:'Eritrean Nakfa',sym:'Nfk'},{code:'ETB',name:'Ethiopian Birr',sym:'Br'},
+    {code:'EUR',name:'Euro',sym:'€'},{code:'FJD',name:'Fijian Dollar',sym:'FJ$'},{code:'FKP',name:'Falkland Islands Pound',sym:'FK£'},
+    {code:'GBP',name:'Pound Sterling',sym:'£'},{code:'GEL',name:'Georgian Lari',sym:'₾'},{code:'GHS',name:'Ghanaian Cedi',sym:'GH₵'},
+    {code:'GIP',name:'Gibraltar Pound',sym:'£'},{code:'GMD',name:'Gambian Dalasi',sym:'D'},{code:'GNF',name:'Guinean Franc',sym:'Fr'},
+    {code:'GTQ',name:'Guatemalan Quetzal',sym:'Q'},{code:'GYD',name:'Guyanese Dollar',sym:'GY$'},{code:'HKD',name:'Hong Kong Dollar',sym:'HK$'},
+    {code:'HNL',name:'Honduran Lempira',sym:'L'},{code:'HRK',name:'Croatian Kuna',sym:'kn'},{code:'HTG',name:'Haitian Gourde',sym:'G'},
+    {code:'HUF',name:'Hungarian Forint',sym:'Ft'},{code:'IDR',name:'Indonesian Rupiah',sym:'Rp'},{code:'ILS',name:'Israeli New Shekel',sym:'₪'},
+    {code:'INR',name:'Indian Rupee',sym:'₹'},{code:'IQD',name:'Iraqi Dinar',sym:'IQD'},{code:'IRR',name:'Iranian Rial',sym:'﷼'},
+    {code:'ISK',name:'Icelandic Króna',sym:'kr'},{code:'JMD',name:'Jamaican Dollar',sym:'J$'},{code:'JOD',name:'Jordanian Dinar',sym:'JD'},
+    {code:'JPY',name:'Japanese Yen',sym:'¥'},{code:'KES',name:'Kenyan Shilling',sym:'KSh'},{code:'KGS',name:'Kyrgyzstani Som',sym:'лв'},
+    {code:'KHR',name:'Cambodian Riel',sym:'៛'},{code:'KMF',name:'Comorian Franc',sym:'Fr'},{code:'KPW',name:'North Korean Won',sym:'₩'},
+    {code:'KRW',name:'South Korean Won',sym:'₩'},{code:'KWD',name:'Kuwaiti Dinar',sym:'KD'},{code:'KYD',name:'Cayman Islands Dollar',sym:'CI$'},
+    {code:'KZT',name:'Kazakhstani Tenge',sym:'₸'},{code:'LAK',name:'Lao Kip',sym:'₭'},{code:'LBP',name:'Lebanese Pound',sym:'L£'},
+    {code:'LKR',name:'Sri Lankan Rupee',sym:'₨'},{code:'LRD',name:'Liberian Dollar',sym:'L$'},{code:'LSL',name:'Lesotho Loti',sym:'L'},
+    {code:'LYD',name:'Libyan Dinar',sym:'LD'},{code:'MAD',name:'Moroccan Dirham',sym:'MAD'},{code:'MDL',name:'Moldovan Leu',sym:'L'},
+    {code:'MGA',name:'Malagasy Ariary',sym:'Ar'},{code:'MKD',name:'Macedonian Denar',sym:'ден'},{code:'MMK',name:'Myanmar Kyat',sym:'K'},
+    {code:'MNT',name:'Mongolian Tugrik',sym:'₮'},{code:'MOP',name:'Macanese Pataca',sym:'MOP$'},{code:'MRU',name:'Mauritanian Ouguiya',sym:'UM'},
+    {code:'MUR',name:'Mauritian Rupee',sym:'₨'},{code:'MVR',name:'Maldivian Rufiyaa',sym:'Rf'},{code:'MWK',name:'Malawian Kwacha',sym:'MK'},
+    {code:'MXN',name:'Mexican Peso',sym:'Mex$'},{code:'MYR',name:'Malaysian Ringgit',sym:'RM'},{code:'MZN',name:'Mozambican Metical',sym:'MT'},
+    {code:'NAD',name:'Namibian Dollar',sym:'N$'},{code:'NGN',name:'Nigerian Naira',sym:'₦'},{code:'NIO',name:'Nicaraguan Córdoba',sym:'C$'},
+    {code:'NOK',name:'Norwegian Krone',sym:'kr'},{code:'NPR',name:'Nepalese Rupee',sym:'₨'},{code:'NZD',name:'New Zealand Dollar',sym:'NZ$'},
+    {code:'OMR',name:'Omani Rial',sym:'OMR'},{code:'PAB',name:'Panamanian Balboa',sym:'B/.'},{code:'PEN',name:'Peruvian Sol',sym:'S/.'},
+    {code:'PGK',name:'Papua New Guinean Kina',sym:'K'},{code:'PHP',name:'Philippine Peso',sym:'₱'},{code:'PKR',name:'Pakistani Rupee',sym:'₨'},
+    {code:'PLN',name:'Polish Zloty',sym:'zł'},{code:'PYG',name:'Paraguayan Guarani',sym:'₲'},{code:'QAR',name:'Qatari Riyal',sym:'QR'},
+    {code:'RON',name:'Romanian Leu',sym:'lei'},{code:'RSD',name:'Serbian Dinar',sym:'din'},{code:'RUB',name:'Russian Ruble',sym:'₽'},
+    {code:'RWF',name:'Rwandan Franc',sym:'Fr'},{code:'SAR',name:'Saudi Riyal',sym:'SR'},{code:'SBD',name:'Solomon Islands Dollar',sym:'SI$'},
+    {code:'SCR',name:'Seychellois Rupee',sym:'₨'},{code:'SDG',name:'Sudanese Pound',sym:'SD£'},{code:'SEK',name:'Swedish Krona',sym:'kr'},
+    {code:'SGD',name:'Singapore Dollar',sym:'S$'},{code:'SHP',name:'Saint Helena Pound',sym:'£'},{code:'SLE',name:'Sierra Leonean Leone',sym:'Le'},
+    {code:'SOS',name:'Somali Shilling',sym:'Sh'},{code:'SRD',name:'Surinamese Dollar',sym:'SR$'},{code:'STN',name:'São Tomé & Príncipe Dobra',sym:'Db'},
+    {code:'SVC',name:'Salvadoran Colón',sym:'₡'},{code:'SYP',name:'Syrian Pound',sym:'S£'},{code:'SZL',name:'Swazi Lilangeni',sym:'L'},
+    {code:'THB',name:'Thai Baht',sym:'฿'},{code:'TJS',name:'Tajikistani Somoni',sym:'SM'},{code:'TMT',name:'Turkmenistani Manat',sym:'T'},
+    {code:'TND',name:'Tunisian Dinar',sym:'DT'},{code:'TOP',name:'Tongan Paʻanga',sym:'T$'},{code:'TRY',name:'Turkish Lira',sym:'₺'},
+    {code:'TTD',name:'Trinidad & Tobago Dollar',sym:'TT$'},{code:'TWD',name:'New Taiwan Dollar',sym:'NT$'},{code:'TZS',name:'Tanzanian Shilling',sym:'TSh'},
+    {code:'UAH',name:'Ukrainian Hryvnia',sym:'₴'},{code:'UGX',name:'Ugandan Shilling',sym:'USh'},{code:'USD',name:'US Dollar',sym:'$'},
+    {code:'UYU',name:'Uruguayan Peso',sym:'$U'},{code:'UZS',name:'Uzbekistani Som',sym:'лв'},{code:'VES',name:'Venezuelan Bolívar',sym:'Bs.S'},
+    {code:'VND',name:'Vietnamese Dong',sym:'₫'},{code:'VUV',name:'Vanuatu Vatu',sym:'Vt'},{code:'WST',name:'Samoan Tala',sym:'T'},
+    {code:'XAF',name:'Central African CFA Franc',sym:'Fr'},{code:'XCD',name:'East Caribbean Dollar',sym:'EC$'},{code:'XOF',name:'West African CFA Franc',sym:'Fr'},
+    {code:'XPF',name:'CFP Franc',sym:'Fr'},{code:'YER',name:'Yemeni Rial',sym:'﷼'},{code:'ZAR',name:'South African Rand',sym:'R'},
+    {code:'ZMW',name:'Zambian Kwacha',sym:'ZK'},{code:'ZWL',name:'Zimbabwean Dollar',sym:'Z$'}
+  ],
+  bullion: [
+    {code:'XAU',name:'Gold (Troy Ounce)',sym:'Au oz'},
+    {code:'XAG',name:'Silver (Troy Ounce)',sym:'Ag oz'}
+  ],
+  digital: [
+    {code:'BTC',name:'Bitcoin',sym:'₿'},
+    {code:'ETH',name:'Ethereum',sym:'Ξ'},
+    {code:'SOL',name:'Solana',sym:'◎'}
+  ]
+};
+
+const ALL_CURRENCIES = {};
+CURRENCY_DATA.fiat.forEach(c => { ALL_CURRENCIES[c.code] = c.sym; });
+
+let CUR = 'USD';
+function sym(){ return ALL_CURRENCIES[CUR] || CUR; }
+function fmt(v){ return sym()+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2}); }
+function fmtS(v){
+  const a=Math.abs(v);
+  if(a>=1e9) return sym()+(a/1e9).toFixed(1)+'B';
+  if(a>=1e6) return sym()+(a/1e6).toFixed(1)+'M';
+  if(a>=1e3) return sym()+(a/1e3).toFixed(0)+'K';
+  return sym()+a.toFixed(0);
+}
+function sumC(cls){ let t=0; document.querySelectorAll('.'+cls).forEach(el=>{ const v=parseFloat(el.value); if(!isNaN(v)) t+=v; }); return t; }
+function setT(id,v){ const el=document.getElementById(id); if(el) el.textContent=Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2}); }
+
+function recalc(){
+  const ta=sumC('nw-asset'), tl=sumC('nw-liability'), nw=ta-tl;
+  setT('a-assets-hd',ta); setT('nw-ta',ta);
+  setT('a-liab-hd',tl); setT('nw-tl',tl);
+  setT('nw-value',Math.abs(nw));
+  const nb=document.getElementById('nw-result'), nt=document.getElementById('nw-tip');
+  if(nb){ nb.classList.remove('positive','negative'); if(nw>0) nb.classList.add('positive'); else if(nw<0) nb.classList.add('negative'); }
+  if(nt){
+    if(ta===0&&tl===0) nt.textContent='Enter your assets and liabilities to calculate net worth.';
+    else if(nw>0) nt.textContent='Positive net worth of '+fmt(nw)+'. Your assets exceed liabilities. Consider investing surplus.';
+    else if(nw<0) nt.textContent='Negative net worth. Focus on paying down high-interest debt first.';
+    else nt.textContent='Breakeven — assets equal liabilities.';
+  }
+  const ti=sumC('cf-inc'), te=sumC('cf-exp'), cf=ti-te;
+  setT('cf-inc-hd',ti); setT('cf-ti',ti);
+  setT('cf-exp-hd',te); setT('cf-te',te);
+  setT('cf-value',Math.abs(cf));
+  const cb=document.getElementById('cf-result'), ct=document.getElementById('cf-tip');
+  if(cb){ cb.classList.remove('positive','negative'); if(cf>0) cb.classList.add('positive'); else if(cf<0) cb.classList.add('negative'); }
+  if(ct){
+    if(ti===0&&te===0) ct.textContent='Enter your income and monthly expenses to calculate cashflow.';
+    else if(cf>0) ct.textContent='Positive cashflow of '+fmt(cf)+'/month. Invest this surplus to build wealth.';
+    else if(cf<0) ct.textContent='Negative cashflow. Expenses exceed income by '+fmt(Math.abs(cf))+'/month. Reduce costs or increase income.';
+    else ct.textContent='Breakeven cashflow. Aim for positive surplus to invest.';
+  }
+  recalcProj();
+  recalcSI();
+}
+
+function recalcProj(){
+  const p=parseFloat(document.getElementById('principal')?.value)||0;
+  const m=parseFloat(document.getElementById('monthly')?.value)||0;
+  const r=(parseFloat(document.getElementById('rate')?.value)||0)/100;
+  const y=parseFloat(document.getElementById('years')?.value)||1;
+  const n=12, totalIn=p+(m*12*y);
+  let fv=totalIn;
+  if(r>0) fv=p*Math.pow(1+r/n,n*y)+(m>0?m*((Math.pow(1+r/n,n*y)-1)/(r/n)):0);
+  const interest=Math.max(0,fv-totalIn);
+  const pi=document.getElementById('proj-invested'), ii=document.getElementById('proj-interest'), fi=document.getElementById('proj-future');
+  if(pi) pi.innerHTML='<span class="cs">'+sym()+'</span>'+totalIn.toLocaleString('en-US',{maximumFractionDigits:0});
+  if(ii) ii.innerHTML='<span class="cs">'+sym()+'</span>'+interest.toLocaleString('en-US',{maximumFractionDigits:0});
+  if(fi) fi.innerHTML='<span class="cs">'+sym()+'</span>'+fv.toLocaleString('en-US',{maximumFractionDigits:0});
+  drawChart(p,m,r,n);
+}
+
+function drawChart(p,m,r,n){
+  const canvas=document.getElementById('chart'); if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height;
+  const light=document.documentElement.classList.contains('light-mode');
+  ctx.fillStyle=light?'#f8fffe':'#111'; ctx.fillRect(0,0,W,H);
+  const data=[];
+  for(let yr=0;yr<=10;yr++){
+    const inv=p+(m*12*yr);
+    let tot=inv;
+    if(r>0) tot=p*Math.pow(1+r/n,n*yr)+(m>0?m*((Math.pow(1+r/n,n*yr)-1)/(r/n)):0);
+    data.push({yr,inv,tot});
+  }
+  const pad={t:25,r:25,b:38,l:65}, cw=W-pad.l-pad.r, ch=H-pad.t-pad.b;
+  const mx=Math.max(...data.map(d=>d.tot),1), sc=ch/(mx*1.1);
+  ctx.strokeStyle=light?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.04)'; ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){ const y=pad.t+(ch/5)*i; ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke(); }
+  ctx.fillStyle=light?'#4b7a62':'#666'; ctx.font='10px JetBrains Mono,monospace';
+  ctx.textAlign='center';
+  for(let i=0;i<=10;i++) ctx.fillText('Y'+i,pad.l+(cw/10)*i,H-pad.b+16);
+  ctx.textAlign='right';
+  for(let i=0;i<=5;i++){ const y=pad.t+(ch/5)*i; ctx.fillText(fmtS(mx*1.1*(5-i)/5),pad.l-6,y+4); }
+  if(data[data.length-1].tot>0&&r>0){
+    ctx.beginPath();
+    data.forEach((d,i)=>{ const x=pad.l+(cw/10)*d.yr, y=pad.t+ch-d.inv*sc; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
+    [...data].reverse().forEach(d=>{ const x=pad.l+(cw/10)*d.yr, y=pad.t+ch-d.tot*sc; ctx.lineTo(x,y); });
+    ctx.closePath(); ctx.fillStyle='rgba(46,204,113,0.12)'; ctx.fill();
+  }
+  ctx.strokeStyle=light?'#aaa':'#555'; ctx.lineWidth=2; ctx.beginPath();
+  data.forEach((d,i)=>{ const x=pad.l+(cw/10)*d.yr, y=pad.t+ch-d.inv*sc; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }); ctx.stroke();
+  ctx.strokeStyle='#2ecc71'; ctx.lineWidth=3; ctx.beginPath();
+  data.forEach((d,i)=>{ const x=pad.l+(cw/10)*d.yr, y=pad.t+ch-d.tot*sc; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }); ctx.stroke();
+  data.forEach(d=>{ const x=pad.l+(cw/10)*d.yr, y=pad.t+ch-d.tot*sc; ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle='#2ecc71'; ctx.fill(); ctx.strokeStyle=light?'#f8fffe':'#111'; ctx.lineWidth=1.5; ctx.stroke(); });
+  const ys=document.getElementById('yr-stats');
+  if(ys) ys.innerHTML=data.slice(1).map(d=>`<div class="ys"><span class="ys-yr">Yr ${d.yr}</span><span class="ys-val">${fmtS(d.tot)}</span></div>`).join('');
+}
+
+function setupCurrency(){
+  const trigger = document.getElementById('cur-trigger');
+  const panel   = document.getElementById('cur-panel');
+  const search  = document.getElementById('cur-search');
+  const list    = document.getElementById('cur-list');
+  const tSym    = document.getElementById('cur-t-sym');
+  const tName   = document.getElementById('cur-t-name');
+  const tCode   = document.getElementById('cur-t-code');
+
+  function buildList(query){
+    list.innerHTML = '';
+    const q = query.trim().toLowerCase();
+    const items = CURRENCY_DATA.fiat;
+    const filtered = q ? items.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q)) : items;
+    if (!filtered.length) {
+      list.innerHTML = '<div class="cur-no-results">No currencies found</div>';
+      return;
+    }
+    filtered.forEach(c => {
+      const opt = document.createElement('div');
+      opt.className = 'cur-option' + (c.code === CUR ? ' selected' : '');
+      opt.setAttribute('role', 'option');
+      opt.dataset.code = c.code;
+      opt.innerHTML = `<span class="cur-opt-sym">${c.sym}</span><span class="cur-opt-name">${c.name}</span><span class="cur-opt-code">${c.code}</span>`;
+      opt.addEventListener('click', () => selectCurrency(c));
+      list.appendChild(opt);
+    });
+  }
+
+  function selectCurrency(c){
+    CUR = c.code;
+    tSym.textContent  = c.sym;
+    tName.textContent = c.name;
+    tCode.textContent = c.code;
+    closePanel();
+    document.querySelectorAll('.cs:not(.bullion-cs):not(.crypto-cs)').forEach(el => el.textContent = sym());
+    recalc();
+  }
+
+  function openPanel(){
+    panel.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    search.value = '';
+    buildList('');
+    search.focus();
+    const selected = list.querySelector('.selected');
+    if (selected) selected.scrollIntoView({ block:'nearest' });
+  }
+
+  function closePanel(){
+    panel.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  trigger.addEventListener('click', () => {
+    if (panel.hidden) openPanel(); else closePanel();
+  });
+
+  search.addEventListener('input', () => buildList(search.value));
+
+  document.addEventListener('click', e => {
+    if (!trigger.contains(e.target) && !panel.contains(e.target)) closePanel();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePanel();
+  });
+
+  buildList('');
+}
+
+function setupAssetPickers(){
+  /* Bullion picker */
+  document.querySelectorAll('#bullion-picker .ap-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#bullion-picker .ap-btn').forEach(b => b.classList.remove('ap-active'));
+      btn.classList.add('ap-active');
+      document.querySelector('.bullion-cs').textContent = btn.dataset.sym;
+    });
+  });
+
+  /* Crypto picker */
+  document.querySelectorAll('#crypto-picker .ap-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#crypto-picker .ap-btn').forEach(b => b.classList.remove('ap-active'));
+      btn.classList.add('ap-active');
+      document.querySelector('.crypto-cs').textContent = btn.dataset.sym;
+    });
+  });
+}
+
+function setupRows(){
+  document.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const listId=btn.dataset.list, cls=btn.dataset.class;
+      const list=document.getElementById(listId); if(!list) return;
+      const name=prompt('Enter category name:');
+      if(!name||!name.trim()) return;
+      const row=document.createElement('div'); row.className='row-item custom-row';
+      row.innerHTML=`<label>${name.trim()}</label><div class="field"><span class="cs">${sym()}</span><input type="number" class="fi ${cls}" placeholder="0" min="0" step="0.01"/></div><button type="button" class="rm-btn" aria-label="Remove row" title="Remove">&#x2715;</button>`;
+      list.appendChild(row);
+      row.querySelector('.fi').addEventListener('input',recalc);
+      row.querySelector('.rm-btn').addEventListener('click',()=>{ row.remove(); recalc(); });
+    });
+  });
+}
+
+function gatherRows(listId,cat){
+  const rows=[];
+  document.querySelectorAll('#'+listId+' .row-item').forEach(row=>{
+    let label = row.querySelector('label')?.textContent.trim() || '';
+    if (!label) {
+      const title = row.querySelector('.asset-picker-title')?.textContent.trim() || '';
+      const active = row.querySelector('.ap-btn.ap-active');
+      label = active ? title + ' — ' + active.dataset.name : title;
+    }
+    const val=parseFloat(row.querySelector('.fi')?.value)||0;
+    if(val!==0) rows.push({cat,name:label,amount:val});
+  });
+  return rows;
+}
+
+function exportCSV(type){
+  let rows=[], title='', summary='';
+  if(type==='nw'){
+    rows=[...gatherRows('nw-assets','Asset'),...gatherRows('nw-liabilities','Liability')];
+    const ta=sumC('nw-asset'), tl=sumC('nw-liability');
+    summary=`\nTotal Assets,,${ta}\nTotal Liabilities,,${tl}\nNet Worth,,${ta-tl}`;
+    title='Sovereign Net Worth Report';
+  } else {
+    rows=[...gatherRows('cf-income','Income'),...gatherRows('cf-expenses','Expense')];
+    const ti=sumC('cf-inc'), te=sumC('cf-exp');
+    summary=`\nTotal Income,,${ti}\nTotal Expenses,,${te}\nMonthly Cashflow,,${ti-te}`;
+    title='Monthly Cashflow Report';
+  }
+  let csv=`${title}\nDate,${new Date().toLocaleDateString()}\nCurrency,${CUR}\n\nCategory,Name,Amount\n`;
+  rows.forEach(r=>{ csv+=`${r.cat},"${r.name}",${r.amount}\n`; });
+  csv+=summary;
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`networthcurve-${type}-${new Date().toISOString().slice(0,10)}.csv`});
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function exportPDF(type){
+  let secs=[], title='', resultLabel='', resultValue=0;
+  if(type==='nw'){
+    const ta=sumC('nw-asset'), tl=sumC('nw-liability');
+    resultLabel='Net Worth'; resultValue=ta-tl; title='Sovereign Net Worth Report';
+    secs=[{h:'Assets',rows:gatherRows('nw-assets','Asset'),total:ta},{h:'Liabilities',rows:gatherRows('nw-liabilities','Liability'),total:tl}];
+  } else {
+    const ti=sumC('cf-inc'), te=sumC('cf-exp');
+    resultLabel='Monthly Cashflow'; resultValue=ti-te; title='Monthly Cashflow Report';
+    secs=[{h:'Income',rows:gatherRows('cf-income','Income'),total:ti},{h:'Expenses',rows:gatherRows('cf-expenses','Expense'),total:te}];
+  }
+  const s=sym(), fp=v=>s+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  let tables=secs.map(sec=>`<h3>${sec.h}</h3><table><thead><tr><th>Name</th><th>Amount</th></tr></thead><tbody>${sec.rows.map(r=>`<tr><td>${r.name}</td><td>${fp(r.amount)}</td></tr>`).join('')}<tr class="tr"><td>Total ${sec.h}</td><td>${fp(sec.total)}</td></tr></tbody></table>`).join('');
+  const isPos=resultValue>=0;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;padding:40px;color:#1a1a1a}.hd{text-align:center;padding-bottom:15px;margin-bottom:20px;border-bottom:2px solid #2ecc71}.hd h1{font-size:20px;color:#145a34}.hd p{font-size:11px;color:#666;margin-top:4px}h3{font-size:13px;color:#145a34;background:#e8f8f0;padding:6px 10px;border-radius:4px;margin:16px 0 8px}table{width:100%;border-collapse:collapse;margin-bottom:10px}th,td{padding:8px 10px;border-bottom:1px solid #e8e8e8;font-size:12px}th{background:#f5f5f5;font-weight:600}td:last-child{text-align:right;font-family:monospace}.tr{font-weight:700;background:#f9f9f9}.rbox{text-align:center;padding:20px;border-radius:8px;margin:20px 0;background:${isPos?'linear-gradient(135deg,#145a34,#2ecc71)':'linear-gradient(135deg,#c0392b,#e74c3c)'};color:#fff}.rl{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.85}.rv{font-size:30px;font-weight:700;font-family:monospace;margin-top:4px}.ft{margin-top:25px;text-align:center;font-size:10px;color:#999;border-top:1px solid #e8e8e8;padding-top:12px}</style></head><body><div class="hd"><h1>NetWorthCurve.com</h1><p>${title} &mdash; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} &mdash; ${CUR}</p></div>${tables}<div class="rbox"><div class="rl">${resultLabel}</div><div class="rv">${resultValue<0?'-':''}${fp(Math.abs(resultValue))}</div></div><div class="ft">Generated by NetWorthCurve.com</div></body></html>`;
+  const w=window.open('','','width=850,height=700');
+  if(w){ w.document.write(html); w.document.close(); w.onload=()=>w.print(); }
+}
+
+function setupCalcTabs(){
+  document.querySelectorAll('.calc-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      const target=tab.dataset.tab;
+      document.querySelectorAll('.calc-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.tab-pane').forEach(p=>{ p.hidden=(p.id!=='tab-'+target); });
+    });
+  });
+}
+
+let siMode='invest', siUnit='y';
+
+function recalcSI(){
+  const p=parseFloat(document.getElementById('si-p')?.value)||0;
+  const r=parseFloat(document.getElementById('si-r')?.value)||0;
+  const tRaw=parseFloat(document.getElementById('si-t')?.value)||0;
+  const tYears=siUnit==='m'?tRaw/12:tRaw;
+  const si=(p*r*tYears)/100;
+  const total=p+si;
+  const emi=(siMode==='loan'&&tYears>0)?total/(tYears*12):0;
+  const cs=sym();
+  const setStat=(id,val)=>{ const el=document.getElementById(id); if(el) el.innerHTML='<span class="cs">'+cs+'</span>'+Math.abs(val).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+  setStat('sst-p',p); setStat('sst-int',si); setStat('sst-tot',total);
+  if(siMode==='loan') setStat('sst-emi',emi);
+  const emiWrap=document.getElementById('sst-emi-wrap');
+  const emiFml=document.getElementById('si-fml-emi');
+  if(emiWrap) emiWrap.style.display=siMode==='loan'?'block':'none';
+  if(emiFml) emiFml.style.display=siMode==='loan'?'inline':'none';
+}
+
+function setupSI(){
+  document.querySelectorAll('.si-mbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      siMode=btn.dataset.mode;
+      document.querySelectorAll('.si-mbtn').forEach(b=>b.classList.remove('si-active'));
+      btn.classList.add('si-active');
+      const head=document.getElementById('si-chead'), body=document.getElementById('si-cbody');
+      const intLbl=document.getElementById('sst-intlbl'), totLbl=document.getElementById('sst-totlbl');
+      if(siMode==='invest'){
+        if(head) head.textContent='Simple Interest \u2014 Investment Mode';
+        if(body) body.innerHTML='Calculates interest on the <strong>principal only</strong>. Ideal for fixed deposits, treasury bills, and short-term savings. Formula: <strong>SI = (P \u00D7 R \u00D7 T) / 100</strong>';
+        if(intLbl) intLbl.textContent='Interest Earned';
+        if(totLbl) totLbl.textContent='Total Amount';
+      } else {
+        if(head) head.textContent='Simple Interest \u2014 Loan Mode';
+        if(body) body.innerHTML='Calculate total interest on a loan and monthly installments. For personal loans, car loans, short-term credit. <strong>SI = (P \u00D7 R \u00D7 T) / 100</strong>, <strong>Monthly = (P + SI) / Months</strong>';
+        if(intLbl) intLbl.textContent='Total Interest Payable';
+        if(totLbl) totLbl.textContent='Total Amount Payable';
+      }
+      recalcSI();
+    });
+  });
+  document.querySelectorAll('.si-tu').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      siUnit=btn.dataset.u;
+      document.querySelectorAll('.si-tu').forEach(b=>b.classList.remove('si-tu-on'));
+      btn.classList.add('si-tu-on');
+      const sfx=document.getElementById('si-tsfx'); if(sfx) sfx.textContent=siUnit==='y'?'yrs':'mo';
+      recalcSI();
+    });
+  });
+  document.getElementById('si-pdf')?.addEventListener('click',()=>exportSIPDF());
+  document.getElementById('si-csv')?.addEventListener('click',()=>exportSICSV());
+}
+
+function exportSIPDF(){
+  const p=parseFloat(document.getElementById('si-p')?.value)||0;
+  const r=parseFloat(document.getElementById('si-r')?.value)||0;
+  const tRaw=parseFloat(document.getElementById('si-t')?.value)||0;
+  const tYears=siUnit==='m'?tRaw/12:tRaw;
+  const si=(p*r*tYears)/100, total=p+si;
+  const emi=(siMode==='loan'&&tYears>0)?total/(tYears*12):0;
+  const s=sym(), fp=v=>s+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const modeLabel=siMode==='invest'?'Investment':'Loan';
+  const timeLabel=tRaw+' '+(siUnit==='y'?'Years':'Months')+' ('+tYears.toFixed(2)+' yrs)';
+  const emiRow=siMode==='loan'?`<tr><td>Monthly Installment</td><td>${fp(emi)}</td></tr>`:'';
+  const isLoan=siMode==='loan';
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Simple Interest Report</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;padding:40px;color:#1a1a1a}.hd{text-align:center;padding-bottom:15px;margin-bottom:20px;border-bottom:2px solid #2ecc71}.hd h1{font-size:20px;color:#145a34}.hd p{font-size:11px;color:#666;margin-top:4px}.mode-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:6px;background:${isLoan?'#fee2e2':'#dcfce7'};color:${isLoan?'#b91c1c':'#15803d'}}h3{font-size:13px;color:#145a34;background:#e8f8f0;padding:6px 10px;border-radius:4px;margin:16px 0 8px}table{width:100%;border-collapse:collapse;margin-bottom:10px}th,td{padding:8px 10px;border-bottom:1px solid #e8e8e8;font-size:12px}th{background:#f5f5f5;font-weight:600}td:last-child{text-align:right;font-family:monospace}.highlight{font-weight:700;background:#f9f9f9}.fml{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px;margin:12px 0;font-family:monospace;font-size:12px;color:#15803d}.rbox{text-align:center;padding:20px;border-radius:8px;margin:20px 0;background:${isLoan?'linear-gradient(135deg,#b91c1c,#ef4444)':'linear-gradient(135deg,#145a34,#2ecc71)'};color:#fff}.rl{font-size:11px;text-transform:uppercase;letter-spacing:2px;opacity:.85}.rv{font-size:28px;font-weight:700;font-family:monospace;margin-top:4px}.ft{margin-top:25px;text-align:center;font-size:10px;color:#999;border-top:1px solid #e8e8e8;padding-top:12px}</style></head><body><div class="hd"><h1>NetWorthCurve.com</h1><p>Simple Interest Report &mdash; ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} &mdash; ${CUR}</p><span class="mode-badge">${modeLabel}</span></div><h3>Inputs</h3><table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody><tr><td>Principal Amount</td><td>${fp(p)}</td></tr><tr><td>Annual Interest Rate</td><td>${r}%</td></tr><tr><td>Time Period</td><td>${timeLabel}</td></tr></tbody></table><div class="fml">Formula: SI = (P &times; R &times; T) / 100${isLoan?' &nbsp;|&nbsp; EMI = (P + SI) / Months':''}</div><h3>Results</h3><table><thead><tr><th>Output</th><th>Value</th></tr></thead><tbody><tr><td>${isLoan?'Total Interest Payable':'Interest Earned'}</td><td>${fp(si)}</td></tr>${emiRow}<tr class="highlight"><td>${isLoan?'Total Amount Payable':'Total Amount'}</td><td>${fp(total)}</td></tr></tbody></table><div class="rbox"><div class="rl">${isLoan?'Total Repayment':'Total Amount'}</div><div class="rv">${fp(total)}</div></div><div class="ft">Generated by NetWorthCurve.com &mdash; Privacy-first financial tools</div></body></html>`;
+  const w=window.open('','','width=850,height=700');
+  if(w){ w.document.write(html); w.document.close(); w.onload=()=>w.print(); }
+}
+
+function exportSICSV(){
+  const p=parseFloat(document.getElementById('si-p')?.value)||0;
+  const r=parseFloat(document.getElementById('si-r')?.value)||0;
+  const tRaw=parseFloat(document.getElementById('si-t')?.value)||0;
+  const tYears=siUnit==='m'?tRaw/12:tRaw;
+  const si=(p*r*tYears)/100, total=p+si;
+  const emi=(siMode==='loan'&&tYears>0)?total/(tYears*12):0;
+  let csv=`Simple Interest Report\nDate,${new Date().toLocaleDateString()}\nCurrency,${CUR}\nMode,${siMode==='invest'?'Investment':'Loan'}\n\nParameter,Value\nPrincipal,${p}\nAnnual Rate,${r}%\nTime,${tRaw} ${siUnit==='y'?'years':'months'}\n\nResult,Value\nSimple Interest,${si.toFixed(2)}\nTotal Amount,${total.toFixed(2)}`;
+  if(siMode==='loan') csv+=`\nMonthly Installment,${emi.toFixed(2)}`;
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`networthcurve-si-${new Date().toISOString().slice(0,10)}.csv`});
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+function init(){
+  setupCurrency();
+  setupAssetPickers();
+  setupRows();
+  setupCalcTabs();
+  setupSI();
+  document.querySelectorAll('.fi').forEach(i=>i.addEventListener('input',recalc));
+  document.getElementById('nw-pdf')?.addEventListener('click',()=>exportPDF('nw'));
+  document.getElementById('nw-csv')?.addEventListener('click',()=>exportCSV('nw'));
+  document.getElementById('cf-pdf')?.addEventListener('click',()=>exportPDF('cf'));
+  document.getElementById('cf-csv')?.addEventListener('click',()=>exportCSV('cf'));
+  drawChart(0,0,0,12);
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+else init();
+</script>

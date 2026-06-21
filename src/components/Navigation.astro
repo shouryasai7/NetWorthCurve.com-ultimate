@@ -1,0 +1,380 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+	{ href: '/', label: 'Home' },
+	{ href: '/about', label: 'About' },
+	{ href: '/contact', label: 'Contact' },
+	{ href: '/privacy', label: 'Privacy' },
+	{ href: '/terms', label: 'Terms' }
+];
+---
+
+<nav class="main-nav" aria-label="Main navigation">
+	<div class="nav-container">
+		<a href="/" class="nav-brand">
+			<div class="brand-icon">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#33FF66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="NetWorthCurve logo" role="img">
+					<path d="M3 3v18h18"/>
+					<path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+					<path d="M15 8h3.7V11.7"/>
+				</svg>
+			</div>
+			<div class="brand-text">
+				<span class="brand-name">NetWorthCurve</span>
+				<span class="brand-tld">.com</span>
+			</div>
+		</a>
+
+		<button type="button" class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+			<span class="toggle-bar"></span>
+			<span class="toggle-bar"></span>
+			<span class="toggle-bar"></span>
+		</button>
+
+		<div class="nav-menu">
+			<ul class="nav-links">
+				{navLinks.map(link => (
+					<li>
+						<a
+							href={link.href}
+							class:list={['nav-link', { active: currentPath === link.href }]}
+							aria-current={currentPath === link.href ? 'page' : undefined}
+						>
+							{link.label}
+						</a>
+					</li>
+				))}
+			</ul>
+			<div class="nav-status">
+				<span class="status-indicator"></span>
+				<span class="status-text">Local Engine Active</span>
+			</div>
+
+			<button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+				<span class="theme-icon dark-icon">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+					</svg>
+				</span>
+				<span class="theme-icon light-icon">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="5"/>
+						<line x1="12" y1="1" x2="12" y2="3"/>
+						<line x1="12" y1="21" x2="12" y2="23"/>
+						<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+						<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+						<line x1="1" y1="12" x2="3" y2="12"/>
+						<line x1="21" y1="12" x2="23" y2="12"/>
+						<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+						<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+					</svg>
+				</span>
+			</button>
+		</div>
+	</div>
+</nav>
+
+<style>
+	.main-nav {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: linear-gradient(180deg, rgba(13, 13, 13, 0.95) 0%, rgba(13, 13, 13, 0.9) 100%);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid rgba(46, 204, 113, 0.15);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+	}
+
+	.nav-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 64px;
+	}
+
+	.nav-brand {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		text-decoration: none;
+		transition: transform var(--transition-fast);
+	}
+
+	.nav-brand:hover {
+		transform: scale(1.02);
+	}
+
+	.brand-icon {
+		width: 38px;
+		height: 38px;
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		background: #0a1a0f;
+		border: 1px solid rgba(51, 255, 102, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 0 12px rgba(51, 255, 102, 0.2);
+		padding: 4px;
+	}
+
+	.brand-icon svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.brand-text {
+		display: flex;
+		align-items: baseline;
+		gap: 1px;
+	}
+
+	.brand-name {
+		font-size: 1.2rem;
+		font-weight: 700;
+		color: #fff;
+		letter-spacing: -0.02em;
+	}
+
+	.brand-tld {
+		font-size: 1.2rem;
+		font-weight: 400;
+		color: var(--emerald-400);
+	}
+
+	.mobile-toggle {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		width: 32px;
+		height: 32px;
+		padding: 4px;
+		background: transparent;
+		border: 1px solid var(--charcoal-500);
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.mobile-toggle:hover {
+		border-color: var(--emerald-500);
+	}
+
+	.toggle-bar {
+		display: block;
+		width: 100%;
+		height: 2px;
+		background: var(--charcoal-200);
+		border-radius: 1px;
+		transition: all var(--transition-fast);
+	}
+
+	.nav-menu {
+		display: flex;
+		align-items: center;
+		gap: var(--space-8);
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: var(--space-1);
+		list-style: none;
+	}
+
+	.nav-link {
+		display: block;
+		padding: var(--space-2) var(--space-4);
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--charcoal-300);
+		border-radius: var(--radius-md);
+		transition: all var(--transition-fast);
+		position: relative;
+	}
+
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		width: 0;
+		height: 2px;
+		background: var(--emerald-500);
+		border-radius: 1px;
+		transform: translateX(-50%);
+		transition: width var(--transition-fast);
+	}
+
+	.nav-link:hover {
+		color: #fff;
+		background: rgba(46, 204, 113, 0.1);
+	}
+
+	.nav-link:hover::after {
+		width: 60%;
+	}
+
+	.nav-link.active {
+		color: var(--emerald-300);
+		background: rgba(46, 204, 113, 0.15);
+	}
+
+	.nav-link.active::after {
+		width: 60%;
+		box-shadow: 0 0 8px var(--emerald-500);
+	}
+
+	.nav-status {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-2) var(--space-4);
+		background: rgba(20, 90, 52, 0.2);
+		border: 1px solid rgba(46, 204, 113, 0.2);
+		border-radius: var(--radius-lg);
+	}
+
+	.status-indicator {
+		width: 8px;
+		height: 8px;
+		background: var(--emerald-500);
+		border-radius: 50%;
+		animation: pulse-glow 2s ease-in-out infinite;
+	}
+
+	.status-text {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--emerald-400);
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.theme-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+		background: var(--charcoal-700);
+		border: 1px solid var(--charcoal-500);
+		border-radius: var(--radius-md);
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.theme-toggle:hover {
+		background: var(--charcoal-600);
+		border-color: var(--emerald-500);
+	}
+
+	.theme-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.theme-icon svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.dark-icon {
+		color: var(--charcoal-200);
+	}
+
+	.light-icon {
+		color: var(--amber-400);
+		display: none;
+	}
+
+	html.light-mode .dark-icon {
+		display: none;
+	}
+
+	html.light-mode .light-icon {
+		display: flex;
+	}
+
+	@media (max-width: 768px) {
+		.mobile-toggle {
+			display: flex;
+		}
+
+		.nav-menu {
+			position: absolute;
+			top: 64px;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			gap: var(--space-4);
+			padding: var(--space-4);
+			background: var(--charcoal-900);
+			border-bottom: 1px solid var(--charcoal-600);
+			box-shadow: var(--shadow-xl);
+			display: none;
+		}
+
+		.nav-menu.open {
+			display: flex;
+		}
+
+		.nav-links {
+			flex-direction: column;
+			width: 100%;
+			gap: var(--space-2);
+		}
+
+		.nav-link {
+			width: 100%;
+			text-align: center;
+			padding: var(--space-3);
+		}
+
+		.nav-status {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+</style>
+
+<script>
+	const toggle = document.querySelector('.mobile-toggle');
+	const menu = document.querySelector('.nav-menu');
+
+	if (toggle && menu) {
+		toggle.addEventListener('click', () => {
+			const isOpen = menu.classList.toggle('open');
+			toggle.setAttribute('aria-expanded', isOpen.toString());
+		});
+	}
+
+	// Theme toggle
+	const themeToggle = document.getElementById('theme-toggle');
+	const html = document.documentElement;
+
+	// Check for saved theme or system preference
+	const savedTheme = localStorage.getItem('theme');
+	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+	if (savedTheme === 'light' || (!savedTheme && !prefersDark)) {
+		html.classList.add('light-mode');
+	}
+
+	if (themeToggle) {
+		themeToggle.addEventListener('click', () => {
+			html.classList.toggle('light-mode');
+			const isLight = html.classList.contains('light-mode');
+			localStorage.setItem('theme', isLight ? 'light' : 'dark');
+		});
+	}
+</script>

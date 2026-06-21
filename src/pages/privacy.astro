@@ -1,0 +1,284 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const lastUpdated = "June 10, 2026";
+---
+
+<Layout
+	title="Privacy Policy - NetWorthCurve.com"
+	description="NetWorthCurve.com Privacy Policy. Zero data collection, zero tracking, complete financial privacy. Learn how we protect your data."
+>
+	<article class="page-article">
+		<div class="page-hero">
+			<div class="page-hero-content">
+				<span class="page-label">LEGAL</span>
+				<h1 class="page-title">Privacy Policy</h1>
+				<p class="page-lead">Last updated: {lastUpdated}</p>
+			</div>
+		</div>
+
+		<div class="page-content">
+			<div class="privacy-highlight">
+				<div class="highlight-icon">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+						<line x1="9" y1="12" x2="15" y2="12"/>
+						<line x1="12" y1="9" x2="12" y2="15"/>
+					</svg>
+				</div>
+				<h2>Our Commitment to Your Privacy</h2>
+				<p>NetWorthCurve.com operates on a fundamental principle: <strong>we do not collect, store, transmit, or sell your financial data</strong>. All calculations occur entirely within your web browser using client-side JavaScript. Your net worth, assets, liabilities, and wealth projections never leave your device.</p>
+			</div>
+
+			<section class="content-block">
+				<h2>1. Information We Collect</h2>
+				<p><strong>We collect no personal financial information.</strong> Unlike traditional financial applications, NetWorthCurve.com does not:</p>
+				<ul class="styled-list">
+					<li>Store your net worth calculations on external servers</li>
+					<li>Track your asset or liability entries</li>
+					<li>Record your wealth projection parameters</li>
+					<li>Collect banking credentials or account information</li>
+					<li>Monitor your investment portfolio data</li>
+				</ul>
+				<p>Our tools operate entirely client-side, meaning all computation happens within your browser session. When you close the browser tab, your session data ceases to exist.</p>
+			</section>
+
+			<section class="content-block">
+				<h2>2. Technical Data Collection</h2>
+				<p>Like most websites, we may collect limited technical data for website functionality and security:</p>
+				<ul class="styled-list">
+					<li><strong>Log Files:</strong> Standard web server logs may record IP addresses, browser type, referring pages, and timestamps for security and troubleshooting purposes.</li>
+					<li><strong>Cookies:</strong> We may use essential cookies for basic website functionality. We do not use tracking cookies or third-party advertising cookies.</li>
+					<li><strong>Analytics:</strong> We may use privacy-focused analytics tools to understand aggregate website usage patterns without identifying individual users.</li>
+				</ul>
+			</section>
+
+			<section class="content-block">
+				<h2>3. Third-Party Services</h2>
+				<p>NetWorthCurve.com may integrate with the following third-party services:</p>
+				<ul class="styled-list">
+					<li><strong>Content Delivery Networks (CDN):</strong> For delivering fonts and static assets. These services may log requests but do not have access to your financial calculations.</li>
+					<li><strong>Advertising Partners:</strong> We may display advertisements through third-party networks. These networks may use cookies and collect data according to their own privacy policies. We recommend reviewing the privacy policies of any advertising partners.</li>
+					<li><strong>Form Services:</strong> Contact form submissions may be processed through third-party form handling services.</li>
+				</ul>
+				<p>We strive to partner only with services that respect user privacy, but cannot guarantee their practices align with our zero-collection philosophy.</p>
+			</section>
+
+			<section class="content-block">
+				<h2>4. How We Use Information</h2>
+				<p>Any limited technical data we collect is used solely for:</p>
+				<ul class="styled-list">
+					<li>Improving website performance and user experience</li>
+					<li>Diagnosing technical issues and security threats</li>
+					<li>Understanding aggregate usage patterns</li>
+					<li>Responding to contact form inquiries</li>
+				</ul>
+			</section>
+
+			<section class="content-block">
+				<h2>5. Data Security</h2>
+				<p>Because we do not collect or store your financial data, there is nothing to breach. Your calculations exist only in your browser's temporary memory. We implement industry-standard security measures for our website infrastructure, including:</p>
+				<ul class="styled-list">
+					<li>HTTPS encryption for all website traffic</li>
+					<li>Regular security audits and updates</li>
+					<li>Protection against common web vulnerabilities</li>
+				</ul>
+			</section>
+
+			<section class="content-block">
+				<h2>6. Changes to This Policy</h2>
+				<p>We may update this Privacy Policy periodically. The "Last Updated" date at the top indicates the most recent revision. Continued use of NetWorthCurve.com after changes constitutes acceptance of the updated policy.</p>
+			</section>
+
+			<section class="content-block">
+				<h2>7. Contact Us</h2>
+				<p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
+				<div class="contact-info">
+					<p><strong>Email:</strong> <a href="mailto:contact@networthcurve.com">contact@networthcurve.com</a></p>
+					<p><strong>Website:</strong> <a href="/contact">networthcurve.com/contact</a></p>
+				</div>
+			</section>
+
+			<div class="summary-box">
+				<h3>Summary</h3>
+				<p>NetWorthCurve.com provides financial calculation tools that operate entirely within your browser. We do not collect, store, or transmit your financial data. Your privacy is our priority.</p>
+			</div>
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.page-article {
+		min-height: 100vh;
+	}
+
+	.page-hero {
+		background: linear-gradient(180deg, var(--charcoal-850) 0%, var(--charcoal-950) 100%);
+		padding: var(--space-12) var(--space-4);
+		text-align: center;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.page-hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 600px;
+		height: 400px;
+		background: radial-gradient(ellipse, rgba(46, 204, 113, 0.1) 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	.page-hero-content {
+		position: relative;
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.page-label {
+		display: inline-block;
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--emerald-500);
+		letter-spacing: 0.15em;
+		margin-bottom: var(--space-4);
+	}
+
+	.page-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		margin-bottom: var(--space-3);
+		line-height: 1.2;
+	}
+
+	.page-lead {
+		font-size: 0.9rem;
+		color: var(--charcoal-400);
+	}
+
+	.page-content {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: var(--space-10) var(--space-4);
+	}
+
+	.privacy-highlight {
+		background: linear-gradient(180deg, var(--emerald-950) 0%, var(--charcoal-900) 100%);
+		border: 1px solid var(--emerald-800);
+		border-radius: var(--radius-xl);
+		padding: var(--space-8);
+		margin-bottom: var(--space-10);
+		text-align: center;
+	}
+
+	.highlight-icon {
+		width: 56px;
+		height: 56px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--emerald-800);
+		border-radius: 50%;
+		margin: 0 auto var(--space-5);
+	}
+
+	.highlight-icon svg {
+		width: 28px;
+		height: 28px;
+		color: var(--emerald-300);
+	}
+
+	.privacy-highlight h2 {
+		font-size: 1.35rem;
+		margin-bottom: var(--space-4);
+	}
+
+	.privacy-highlight p {
+		color: var(--charcoal-200);
+		line-height: 1.7;
+	}
+
+	.content-block {
+		margin-bottom: var(--space-10);
+	}
+
+	.content-block h2 {
+		font-size: 1.25rem;
+		color: var(--emerald-300);
+		margin-bottom: var(--space-4);
+		padding-bottom: var(--space-2);
+		border-bottom: 1px solid var(--charcoal-700);
+	}
+
+	.content-block p {
+		color: var(--charcoal-200);
+		line-height: 1.8;
+		margin-bottom: var(--space-4);
+	}
+
+	.styled-list {
+		list-style: disc;
+		padding-left: var(--space-6);
+		margin: var(--space-4) 0;
+	}
+
+	.styled-list li {
+		margin-bottom: var(--space-2);
+		color: var(--charcoal-200);
+		line-height: 1.7;
+	}
+
+	.styled-list strong {
+		color: #fff;
+	}
+
+	.contact-info {
+		background: var(--charcoal-850);
+		padding: var(--space-5);
+		border-radius: var(--radius-md);
+		margin-top: var(--space-3);
+	}
+
+	.contact-info p {
+		margin-bottom: var(--space-2);
+	}
+
+	.summary-box {
+		background: linear-gradient(180deg, var(--charcoal-850) 0%, var(--charcoal-800) 100%);
+		border: 1px solid var(--emerald-700);
+		border-radius: var(--radius-lg);
+		padding: var(--space-6);
+		margin-top: var(--space-10);
+	}
+
+	.summary-box h3 {
+		color: var(--emerald-400);
+		margin-bottom: var(--space-3);
+	}
+
+	.summary-box p {
+		color: var(--charcoal-300);
+		margin-bottom: 0;
+	}
+
+	/* Light mode */
+	html.light-mode .page-hero { background: #f1f3f5; }
+	html.light-mode .page-title { color: #101214; }
+	html.light-mode .page-lead { color: #868e96; }
+	html.light-mode .privacy-highlight { background: #f0fdf4; border-color: #bbf7d0; }
+	html.light-mode .privacy-highlight h2 { color: #101214; }
+	html.light-mode .privacy-highlight p { color: #343a40; }
+	html.light-mode .privacy-highlight strong { color: #101214; }
+	html.light-mode .highlight-icon { background: #bbf7d0; }
+	html.light-mode .content-block h2 { color: #101214; border-bottom-color: #dee2e6; }
+	html.light-mode .content-block p { color: #343a40; }
+	html.light-mode .styled-list li { color: #343a40; }
+	html.light-mode .styled-list strong { color: #101214; }
+	html.light-mode .contact-info { background: #f1f3f5; border: 1px solid #dee2e6; }
+	html.light-mode .summary-box { background: #f0fdf4; border-color: #16a34a; }
+	html.light-mode .summary-box h3 { color: #16a34a; }
+	html.light-mode .summary-box p { color: #343a40; }
+</style>

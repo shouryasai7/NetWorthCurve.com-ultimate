@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="404 - Page Not Found | NetWorthCurve.com"
+	description="The page you're looking for doesn't exist. Return to NetWorthCurve.com to calculate your net worth."
+	noindex={true}
+>
+	<div class="error-page">
+		<div class="error-content">
+			<div class="error-code">404</div>
+			<div class="error-icon">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+					<circle cx="12" cy="12" r="10"/>
+					<path d="M16 16s-1.5-2-4-2-4 2-4 2"/>
+					<line x1="9" y1="9" x2="9.01" y2="9"/>
+					<line x1="15" y1="9" x2="15.01" y2="9"/>
+				</svg>
+			</div>
+			<h1 class="error-title">Page Not Found</h1>
+			<p class="error-message">The page you're looking for doesn't exist or has been moved. Let's get you back on track.</p>
+
+			<div class="error-actions">
+				<a href="/" class="btn btn-primary">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+						<polyline points="9 22 9 12 15 12 15 22"/>
+					</svg>
+					Go Home
+				</a>
+				<a href="/contact" class="btn btn-secondary">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+						<polyline points="22,6 12,13 2,6"/>
+					</svg>
+					Contact Support
+				</a>
+			</div>
+
+			<div class="quick-links">
+				<h3>Quick Links</h3>
+				<div class="links-grid">
+					<a href="/" class="quick-link">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+							<line x1="1" y1="10" x2="23" y2="10"/>
+						</svg>
+						<span>Net Worth Calculator</span>
+					</a>
+					<a href="/#projector" class="quick-link">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+							<polyline points="17 6 23 6 23 12"/>
+						</svg>
+						<span>Compound Interest Projector</span>
+					</a>
+					<a href="/about" class="quick-link">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="12" cy="12" r="10"/>
+							<line x1="12" y1="16" x2="12" y2="12"/>
+							<line x1="12" y1="8" x2="12.01" y2="8"/>
+						</svg>
+						<span>About Us</span>
+					</a>
+					<a href="/privacy" class="quick-link">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+						</svg>
+						<span>Privacy Policy</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.error-page {
+		min-height: calc(100vh - 200px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-8) var(--space-4);
+	}
+
+	.error-content {
+		text-align: center;
+		max-width: 600px;
+	}
+
+	.error-code {
+		font-size: clamp(6rem, 20vw, 12rem);
+		font-weight: 700;
+		line-height: 1;
+		background: linear-gradient(135deg, var(--charcoal-600) 0%, var(--charcoal-400) 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		opacity: 0.3;
+		margin-bottom: var(--space-4);
+	}
+
+	.error-icon {
+		width: 80px;
+		height: 80px;
+		margin: 0 auto var(--space-6);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, var(--emerald-800), var(--emerald-700));
+		border-radius: 50%;
+		box-shadow: 0 0 30px rgba(46, 204, 113, 0.3);
+	}
+
+	.error-icon svg {
+		width: 40px;
+		height: 40px;
+		color: var(--emerald-300);
+	}
+
+	.error-title {
+		font-size: clamp(1.5rem, 4vw, 2rem);
+		margin-bottom: var(--space-4);
+	}
+
+	.error-message {
+		font-size: 1rem;
+		color: var(--charcoal-400);
+		margin-bottom: var(--space-8);
+		line-height: 1.6;
+	}
+
+	.error-actions {
+		display: flex;
+		gap: var(--space-4);
+		justify-content: center;
+		flex-wrap: wrap;
+		margin-bottom: var(--space-10);
+	}
+
+	.error-actions .btn svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.quick-links {
+		text-align: center;
+		padding: var(--space-6);
+		background: var(--charcoal-850);
+		border: 1px solid var(--charcoal-700);
+		border-radius: var(--radius-xl);
+	}
+
+	.quick-links h3 {
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--charcoal-400);
+		margin-bottom: var(--space-5);
+	}
+
+	.links-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-3);
+	}
+
+	.quick-link {
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-3);
+		background: var(--charcoal-800);
+		border: 1px solid var(--charcoal-600);
+		border-radius: var(--radius-md);
+		font-size: 0.85rem;
+		color: var(--charcoal-300);
+		transition: all var(--transition-fast);
+	}
+
+	.quick-link:hover {
+		background: var(--charcoal-750);
+		border-color: var(--emerald-700);
+		color: var(--emerald-400);
+	}
+
+	.quick-link svg {
+		width: 18px;
+		height: 18px;
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 500px) {
+		.links-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

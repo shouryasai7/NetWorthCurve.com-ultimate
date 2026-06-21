@@ -1,0 +1,665 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	noindex?: boolean;
+}
+
+const {
+	title = "NetWorthCurve.com - Sovereign Wealth Calculator & Compound Interest Projector",
+	description = "Premium zero-tracking net worth calculator and compound interest projector. Manage assets, liabilities, and project wealth growth across USD, EUR, GBP, JPY, INR, and BTC currencies.",
+	noindex = false
+} = Astro.props;
+
+const siteURL = "https://networthcurve.com";
+const canonicalURL = new URL(Astro.url.pathname, siteURL).href;
+const ogImage = `${siteURL}/og-image.png`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<meta name="generator" content={Astro.generator} />
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-SS0425VWQF"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-SS0425VWQF');
+	</script>
+
+	<!-- Primary Meta Tags -->
+	<title>{title}</title>
+	<meta name="title" content={title} />
+	<meta name="description" content={description} />
+	<meta name="keywords" content="net worth calculator, compound interest calculator, wealth management, asset allocation, personal finance, financial planning, sovereign wealth, privacy-first finance, balance sheet" />
+	<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+	<meta name="author" content="NetWorthCurve.com" />
+	<meta name="language" content="English" />
+	<meta name="revisit-after" content="7 days" />
+	<link rel="canonical" href={canonicalURL} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={canonicalURL} />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:site_name" content="NetWorthCurve.com" />
+	<meta property="og:image" content={ogImage} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="NetWorthCurve.com - Sovereign Wealth Calculator" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content={canonicalURL} />
+	<meta property="twitter:title" content={title} />
+	<meta property="twitter:description" content={description} />
+	<meta property="twitter:image" content={ogImage} />
+	<meta property="twitter:site" content="@NetWorthCurve" />
+
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+	<!-- Schema.org Organization -->
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "NetWorthCurve.com",
+		"url": "https://networthcurve.com",
+		"logo": "https://networthcurve.com/favicon.svg",
+		"description": description,
+		"sameAs": [],
+		"contactPoint": {
+			"@type": "ContactPoint",
+			"contactType": "customer service",
+			"url": "https://networthcurve.com/contact"
+		}
+	})} />
+
+	<!-- Schema.org WebApplication -->
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "WebApplication",
+		"name": "NetWorthCurve.com",
+		"description": description,
+		"url": "https://networthcurve.com",
+		"applicationCategory": "FinanceApplication",
+		"operatingSystem": "Any",
+		"browserRequirements": "Requires JavaScript",
+		"offers": {
+			"@type": "Offer",
+			"price": "0",
+			"priceCurrency": "USD"
+		}
+	})} />
+</head>
+<body>
+	<Navigation />
+	<slot />
+	<Footer />
+</body>
+</html>
+
+<style is:global>
+	/* Linux Mint Luxury Color Palette */
+	:root {
+		/* Deep Obsidian Charcoals */
+		--charcoal-950: #0a0a0a;
+		--charcoal-900: #0d0d0d;
+		--charcoal-850: #111111;
+		--charcoal-800: #1a1a1a;
+		--charcoal-750: #1f1f1f;
+		--charcoal-700: #252525;
+		--charcoal-650: #2a2a2a;
+		--charcoal-600: #2d2d2d;
+		--charcoal-500: #3d3d3d;
+		--charcoal-400: #4a4a4a;
+		--charcoal-300: #6b6b6b;
+		--charcoal-200: #8a8a8a;
+		--charcoal-100: #a8a8a8;
+
+		/* Rich Emerald Greens (Linux Mint signature) */
+		--emerald-950: #052e16;
+		--emerald-900: #0b3d20;
+		--emerald-850: #0d4a28;
+		--emerald-800: #145a34;
+		--emerald-750: #186b3f;
+		--emerald-700: #1d7a48;
+		--emerald-650: #218a52;
+		--emerald-600: #26a65d;
+		--emerald-550: #2dba6a;
+		--emerald-500: #2ecc71;
+		--emerald-450: #44d583;
+		--emerald-400: #54d98d;
+		--emerald-350: #6ede9c;
+		--emerald-300: #7ce0a9;
+		--emerald-250: #96e8bb;
+		--emerald-200: #a6e8c5;
+		--emerald-150: #c0f0d8;
+		--emerald-100: #d0f4e1;
+
+		/* Mint Cyan Accent */
+		--mint-400: #6ac3b8;
+		--mint-500: #5cb8ac;
+		--mint-600: #4aa89c;
+
+		/* Warm Amber for warnings */
+		--amber-400: #fbbf24;
+		--amber-500: #f59e0b;
+		--amber-600: #d97706;
+
+		/* Crimson for negative values */
+		--crimson-400: #ef4444;
+		--crimson-500: #e74c3c;
+		--crimson-600: #c0392b;
+		--crimson-700: #991b1b;
+
+		/* Glass effects */
+		--glass-dark: rgba(13, 13, 13, 0.8);
+		--glass-medium: rgba(26, 26, 26, 0.6);
+		--glass-light: rgba(37, 37, 37, 0.4);
+
+		/* Typography */
+		--font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+		--font-mono: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+
+		/* 8px Spacing System */
+		--space-1: 0.25rem;
+		--space-2: 0.5rem;
+		--space-3: 0.75rem;
+		--space-4: 1rem;
+		--space-5: 1.25rem;
+		--space-6: 1.5rem;
+		--space-8: 2rem;
+		--space-10: 2.5rem;
+		--space-12: 3rem;
+		--space-16: 4rem;
+		--space-20: 5rem;
+		--space-24: 6rem;
+
+		/* Border Radius */
+		--radius-xs: 2px;
+		--radius-sm: 4px;
+		--radius-md: 8px;
+		--radius-lg: 12px;
+		--radius-xl: 16px;
+		--radius-2xl: 24px;
+
+		/* Shadows */
+		--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+		--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+		--shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.6);
+		--shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.7);
+		--shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+		--shadow-glow-emerald: 0 0 20px rgba(46, 204, 113, 0.5), 0 0 40px rgba(46, 204, 113, 0.3);
+		--shadow-glow-crimson: 0 0 20px rgba(192, 57, 43, 0.5), 0 0 40px rgba(192, 57, 43, 0.3);
+		--shadow-glow-amber: 0 0 15px rgba(245, 158, 11, 0.4);
+
+		/* Transitions */
+		--transition-fast: 150ms ease;
+		--transition-base: 250ms ease;
+		--transition-slow: 400ms ease;
+	}
+
+	/* Reset & Base */
+	*, *::before, *::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		font-size: 16px;
+		scroll-behavior: smooth;
+	}
+
+	body {
+		font-family: var(--font-display);
+		background: var(--charcoal-950);
+		color: var(--charcoal-100);
+		line-height: 1.6;
+		min-height: 100vh;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		overflow-x: hidden;
+	}
+
+	/* Gradient Background Pattern */
+	body::before {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background:
+			radial-gradient(ellipse at 20% 0%, rgba(29, 122, 72, 0.15) 0%, transparent 50%),
+			radial-gradient(ellipse at 80% 100%, rgba(38, 166, 93, 0.1) 0%, transparent 50%),
+			radial-gradient(ellipse at 50% 50%, rgba(13, 13, 13, 1) 0%, var(--charcoal-950) 100%);
+		pointer-events: none;
+		z-index: -2;
+	}
+
+	/* Noise texture overlay */
+	body::after {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+		opacity: 0.03;
+		pointer-events: none;
+		z-index: -1;
+	}
+
+	/* Typography */
+	h1, h2, h3, h4, h5, h6 {
+		font-family: var(--font-display);
+		font-weight: 600;
+		line-height: 1.2;
+		color: #fff;
+		letter-spacing: -0.02em;
+	}
+
+	p {
+		color: var(--charcoal-200);
+		line-height: 1.7;
+	}
+
+	a {
+		color: var(--emerald-400);
+		text-decoration: none;
+		transition: color var(--transition-fast);
+	}
+
+	a:hover {
+		color: var(--emerald-300);
+	}
+
+	/* Focus States */
+	:focus-visible {
+		outline: 2px solid var(--emerald-500);
+		outline-offset: 2px;
+	}
+
+	/* Scrollbar */
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: var(--charcoal-800);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: var(--charcoal-500);
+		border-radius: var(--radius-sm);
+		border: 2px solid var(--charcoal-800);
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--emerald-600);
+	}
+
+	/* Selection */
+	::selection {
+		background: var(--emerald-700);
+		color: #fff;
+	}
+
+	/* Utility Classes */
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+	}
+
+	.container-narrow {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 var(--space-4);
+	}
+
+	/* Glass Panel */
+	.glass-panel {
+		background: var(--glass-medium);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		border-radius: var(--radius-lg);
+	}
+
+	/* Terminal Panel */
+	.terminal-panel {
+		background: linear-gradient(180deg, var(--charcoal-850) 0%, var(--charcoal-900) 100%);
+		border: 1px solid var(--charcoal-600);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-inner), var(--shadow-md);
+	}
+
+	/* Button Styles */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		padding: var(--space-3) var(--space-5);
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-size: 0.9rem;
+		border-radius: var(--radius-md);
+		border: 2px solid transparent;
+		cursor: pointer;
+		transition: all var(--transition-fast);
+		text-decoration: none;
+	}
+
+	.btn-primary {
+		background: linear-gradient(135deg, var(--emerald-700) 0%, var(--emerald-600) 100%);
+		border-color: var(--emerald-500);
+		color: #fff;
+	}
+
+	.btn-primary:hover {
+		background: linear-gradient(135deg, var(--emerald-600) 0%, var(--emerald-500) 100%);
+		box-shadow: var(--shadow-glow-emerald);
+		transform: translateY(-1px);
+	}
+
+	.btn-secondary {
+		background: var(--charcoal-700);
+		border-color: var(--charcoal-500);
+		color: var(--charcoal-200);
+	}
+
+	.btn-secondary:hover {
+		background: var(--charcoal-600);
+		border-color: var(--emerald-600);
+		color: #fff;
+	}
+
+	/* Input Styles */
+	.input-field {
+		width: 100%;
+		padding: var(--space-3) var(--space-4);
+		font-family: var(--font-mono);
+		font-size: 1rem;
+		background: var(--charcoal-900);
+		border: 1px solid var(--charcoal-500);
+		border-radius: var(--radius-md);
+		color: #fff;
+		transition: all var(--transition-fast);
+	}
+
+	.input-field:focus {
+		border-color: var(--emerald-500);
+		box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+	}
+
+	.input-field::placeholder {
+		color: var(--charcoal-400);
+	}
+
+	/* Card Styles */
+	.card {
+		background: linear-gradient(180deg, var(--charcoal-800) 0%, var(--charcoal-850) 100%);
+		border: 1px solid var(--charcoal-600);
+		border-radius: var(--radius-lg);
+		padding: var(--space-6);
+		transition: all var(--transition-base);
+	}
+
+	.card:hover {
+		border-color: var(--emerald-700);
+		box-shadow: var(--shadow-lg);
+	}
+
+	/* Badge */
+	.badge {
+		display: inline-block;
+		padding: var(--space-1) var(--space-3);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		border-radius: var(--radius-sm);
+		background: var(--emerald-800);
+		color: var(--emerald-200);
+		border: 1px solid var(--emerald-700);
+	}
+
+	/* Glow Text */
+	.glow-text {
+		text-shadow: 0 0 20px rgba(46, 204, 113, 0.5), 0 0 40px rgba(46, 204, 113, 0.3);
+	}
+
+	/* Animations */
+	@keyframes pulse-glow {
+		0%, 100% {
+			opacity: 1;
+			box-shadow: 0 0 10px var(--emerald-500);
+		}
+		50% {
+			opacity: 0.7;
+			box-shadow: 0 0 20px var(--emerald-500), 0 0 30px var(--emerald-600);
+		}
+	}
+
+	@keyframes slide-up {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes fade-in {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	.animate-slide-up {
+		animation: slide-up 0.6s ease forwards;
+	}
+
+	.animate-fade-in {
+		animation: fade-in 0.4s ease forwards;
+	}
+
+	/* Light Mode — clean white/neutral with high contrast */
+	html.light-mode {
+		/* Neutral surfaces — white/light-gray background hierarchy */
+		--charcoal-950: #ffffff;
+		--charcoal-900: #f8f9fa;
+		--charcoal-850: #f1f3f5;
+		--charcoal-800: #e9ecef;
+		--charcoal-750: #dee2e6;
+		--charcoal-700: #ced4da;
+		--charcoal-650: #adb5bd;
+		--charcoal-600: #868e96;
+		--charcoal-500: #495057;
+		--charcoal-400: #343a40;
+		--charcoal-300: #212529;
+		--charcoal-200: #1a1d21;
+		--charcoal-100: #101214;
+
+		/* Keep emerald accent colors vivid for contrast */
+		--emerald-950: #052e16;
+		--emerald-900: #0b3d20;
+		--emerald-850: #0d4a28;
+		--emerald-800: #145a34;
+		--emerald-700: #1d7a48;
+		--emerald-600: #16a34a;
+		--emerald-550: #15803d;
+		--emerald-500: #16a34a;
+		--emerald-450: #22c55e;
+		--emerald-400: #16a34a;
+		--emerald-350: #15803d;
+		--emerald-300: #166534;
+		--emerald-250: #14532d;
+		--emerald-200: #052e16;
+		--emerald-100: #052e16;
+
+		--crimson-400: #dc2626;
+		--crimson-500: #b91c1c;
+		--crimson-600: #991b1b;
+	}
+
+	html.light-mode body {
+		background: #f8f9fa;
+		color: #212529;
+	}
+
+	html.light-mode body::before {
+		background:
+			radial-gradient(ellipse at 20% 0%, rgba(22, 163, 74, 0.06) 0%, transparent 50%),
+			radial-gradient(ellipse at 80% 100%, rgba(22, 163, 74, 0.04) 0%, transparent 50%),
+			radial-gradient(ellipse at 50% 50%, #f8f9fa 0%, #f1f3f5 100%);
+	}
+
+	html.light-mode body::after {
+		opacity: 0;
+	}
+
+	html.light-mode h1, html.light-mode h2, html.light-mode h3,
+	html.light-mode h4, html.light-mode h5, html.light-mode h6 {
+		color: #101214;
+	}
+
+	html.light-mode p {
+		color: #212529;
+	}
+
+	html.light-mode a {
+		color: #16a34a;
+	}
+
+	html.light-mode a:hover {
+		color: #15803d;
+	}
+
+	html.light-mode .main-nav {
+		background: rgba(255, 255, 255, 0.97);
+		border-bottom-color: rgba(22, 163, 74, 0.2);
+		box-shadow: 0 1px 12px rgba(0,0,0,0.08);
+	}
+
+	html.light-mode .brand-name {
+		color: #101214;
+	}
+
+	html.light-mode .nav-link {
+		color: #343a40;
+	}
+
+	html.light-mode .nav-link:hover {
+		color: #101214;
+		background: rgba(22, 163, 74, 0.08);
+	}
+
+	html.light-mode .nav-link.active {
+		color: #16a34a;
+		background: rgba(22, 163, 74, 0.1);
+	}
+
+	html.light-mode .nav-status {
+		background: rgba(22, 163, 74, 0.08);
+		border-color: rgba(22, 163, 74, 0.2);
+	}
+
+	html.light-mode .status-text {
+		color: #16a34a;
+	}
+
+	html.light-mode .currency-btn {
+		background: #ffffff;
+		border-color: #ced4da;
+	}
+
+	html.light-mode .currency-btn.active {
+		background: #f0fdf4;
+		border-color: #16a34a;
+	}
+
+	html.light-mode .matrix-panel {
+		background: #ffffff;
+		border-color: #dee2e6;
+	}
+
+	html.light-mode .input-row {
+		background: #ffffff;
+		border-color: #dee2e6;
+	}
+
+	html.light-mode .financial-input {
+		color: #101214;
+	}
+
+	html.light-mode .terminal-frame {
+		background: #f8f9fa;
+	}
+
+	html.light-mode .terminal-header-bar {
+		background: #f1f3f5;
+		border-color: #dee2e6;
+	}
+
+	html.light-mode .nw-value {
+		color: #101214 !important;
+	}
+
+	html.light-mode .footer {
+		background: #f1f3f5;
+		border-color: #dee2e6;
+	}
+
+	html.light-mode .footer-text {
+		color: #343a40;
+	}
+
+	html.light-mode ::selection {
+		background: #bbf7d0;
+		color: #052e16;
+	}
+
+	html.light-mode .btn-primary {
+		background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+		border-color: #15803d;
+		color: #fff;
+	}
+
+	html.light-mode .btn-primary:hover {
+		background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+		box-shadow: 0 4px 16px rgba(22, 163, 74, 0.3);
+		color: #fff;
+	}
+
+	html.light-mode .btn-secondary {
+		background: #fff;
+		border-color: #dee2e6;
+		color: #212529;
+	}
+
+	html.light-mode .btn-secondary:hover {
+		background: #f1f3f5;
+		border-color: #16a34a;
+		color: #101214;
+	}
+</style>
