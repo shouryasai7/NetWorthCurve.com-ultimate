@@ -10,7 +10,7 @@ interface Props {
 
 const {
 	title = "NetWorthCurve.com - Wealth & Balance Sheet Calculator",
-	description = "Premium net worth and balance sheet generator. Track assets, liabilities, and project compound or simple interest across over 180 global currencies.",
+	description = "Premium net worth and balance sheet generator. Track assets, liabilities, and calculate compound or simple interest across over 180 global currencies.",
 	noindex = false
 } = Astro.props;
 
@@ -29,14 +29,15 @@ const ogImage = `${siteURL}/og-image.png`;
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-SS0425VWQF"></script>
-	<script>
+	<!-- FIXED: Added is:inline so Astro doesn't bundle or break this snippet -->
+	<script is:inline>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		gtag('config', 'G-SS0425VWQF');
 	</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4845317006493634"
-     crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4845317006493634" crossorigin="anonymous"></script>
+
 	<!-- Primary Meta Tags -->
 	<title>{title}</title>
 	<meta name="title" content={title} />
@@ -111,6 +112,7 @@ const ogImage = `${siteURL}/og-image.png`;
 	<Footer />
 </body>
 </html>
+	
 
 <style is:global>
 	/* Linux Mint Luxury Color Palette */
