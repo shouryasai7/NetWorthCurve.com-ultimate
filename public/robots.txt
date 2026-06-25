@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Explicitly invite the AdSense review bot
+User-agent: Mediapartners-Google
+Allow: /
+
 Sitemap: https://networthcurve.com/sitemap.xml
