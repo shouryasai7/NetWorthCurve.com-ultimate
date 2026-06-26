@@ -74,6 +74,12 @@ const navLinks = [
 </nav>
 
 <style>
+/* Target the outermost header element to ensure it's not clamping the height */
+    header, .site-header, #header {
+        height: auto !important;
+        min-height: 110px !important; /* Forces the header area to expand */
+    }
+
 	.main-nav {
 		position: sticky;
 		top: 0;
@@ -87,9 +93,9 @@ const navLinks = [
 
 	.nav-container {
 		display: flex !important;
-        align-items: center !important; /* Vertically aligns logo and links perfectly */
-        justify-content: space-between;
-        height: 90px !important;       /* Gives the large logo breathing room */
+        align-items: center !important; 
+        justify-content: space-between !important;
+        height: 110px !important; /* Bumped up significantly to allow a massive logo */
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 var(--space-4);
@@ -98,9 +104,8 @@ const navLinks = [
 	.nav-brand {
 		display: flex !important;
         align-items: center !important;
-        height: 100% !important;        /* Let it use the full height of the header container */
-        text-decoration: none;
-        flex-shrink: 0;
+        height: 100% !important;
+        flex-shrink: 0 !important;
 	}
 
 	.nav-brand:hover {
@@ -109,12 +114,10 @@ const navLinks = [
 
 	.nav-logo {
 		display: block !important;
-        height: 65px !important;        /* Increased height to make the tagline physically readable */
-        width: auto !important;         /* Keeps aspect ratio intact */
+        height: 85px !important;  /* This will make the logo and tagline bold and clear */
+        width: auto !important;   /* Keeps the aspect ratio from stretching */
+        max-height: 85px !important;
         object-fit: contain !important;
-        
-        /* A subtle contrast filter to make that green tagline pop against the background */
-        filter: contrast(1.1);
 	}
 	
 
