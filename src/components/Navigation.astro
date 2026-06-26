@@ -18,8 +18,8 @@ const navLinks = [
         src="/logo.png" 
         alt="NetWorthCurve.com Logo" 
         class="nav-logo" 
-        width="180" 
-        height="45"
+        width="250" 
+        height="60" 
         loading="eager"
     />
 </a>
@@ -86,13 +86,13 @@ const navLinks = [
 	}
 
 	.nav-container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 var(--space-4);
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		height: 64px;
+        align-items: center; /* This centers the logo and links vertically */
+        justify-content: space-between;
+        height: 80px;        /* Increased from 64px to accommodate larger logo */
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-4);
 	}
 
 	.nav-brand {
@@ -108,9 +108,9 @@ const navLinks = [
 
 	.nav-logo {
 		display: block;
-		height: 40px; 
-		width: auto;
-		object-fit: contain;
+        height: 60px;       /* Increase this for a bigger visual impact */
+        width: auto;
+        object-fit: contain;
 	}
 	
 
