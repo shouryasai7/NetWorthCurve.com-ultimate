@@ -82,20 +82,21 @@ const navLinks = [
 
 	.main-nav {
 		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: linear-gradient(180deg, rgba(13, 13, 13, 0.95) 0%, rgba(13, 13, 13, 0.9) 100%);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid rgba(46, 204, 113, 0.15);
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        top: 0;
+        z-index: 100;
+        height: 110px !important; /* Force the outer navbar height to 110px */
+        background: linear-gradient(180deg, rgba(13, 13, 13, 0.95) 0%, rgba(13, 13, 13, 0.9) 100%);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(46, 204, 113, 0.15);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 	}
 
 	.nav-container {
 		display: flex !important;
-        align-items: center !important; 
+        align-items: center !important; /* Perfect vertical alignment for logo and nav items */
         justify-content: space-between !important;
-        height: 110px !important; /* Bumped up significantly to allow a massive logo */
+        height: 100% !important; /* Let it scale to match the 110px height of .main-nav */
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 var(--space-4);
@@ -114,9 +115,9 @@ const navLinks = [
 
 	.nav-logo {
 		display: block !important;
-        height: 85px !important;  /* This will make the logo and tagline bold and clear */
-        width: auto !important;   /* Keeps the aspect ratio from stretching */
-        max-height: 85px !important;
+        height: 80px !important;  /* Bumps the physical size up so the tagline is completely clear */
+        width: auto !important;   /* Keeps your logo's aspect ratio perfect */
+        max-height: 80px !important;
         object-fit: contain !important;
 	}
 	
