@@ -113,11 +113,22 @@ const navLinks = [
 
 	.nav-logo {
 		display: block !important;
-        height: 80px !important;  /* Bumps the physical size up so the tagline is completely clear */
-        width: auto !important;   /* Keeps your logo's aspect ratio perfect */
-        max-height: 80px !important;
+        height: 55px !important; 
+        width: auto !important;
         object-fit: contain !important;
+        
+        /* Flips the dark text to white and sharpens the green tagline for dark background */
+        filter: invert(0.95) brightness(1.3) contrast(1.2) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.9));
+        transition: filter 0.3s ease; /* Smooth fade when switching modes *
 	}
+
+     /* 2. OVERRIDE: LIGHT MODE */
+    /* When your JS clicks into action and adds 'light-mode' to the html tag, 
+       we remove the filter so the logo goes back to its original clean colors. */
+    html.light-mode .nav-logo {
+        filter: none !important;
+    }
+</style>
 	
 
 	.brand-icon svg {
