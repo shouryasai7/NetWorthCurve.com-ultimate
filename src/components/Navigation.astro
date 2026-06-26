@@ -15,17 +15,16 @@ const navLinks = [
 	<div class="nav-container">
 		<a href="/" class="nav-brand" aria-label="NetWorthCurve Home">
     <img 
-        src="/logo.jpeg" 
+        src="/logo.png" 
         alt="NetWorthCurve.com Logo" 
-        class="transparent-logo" 
+        class="nav-logo" 
         width="180" 
         height="45"
         loading="eager"
-        decoding="async"
     />
 </a>
-
-		<button type="button" class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+    
+            <button type="button" class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
 			<span class="toggle-bar"></span>
 			<span class="toggle-bar"></span>
 			<span class="toggle-bar"></span>
@@ -100,19 +99,18 @@ const navLinks = [
 		display: flex;
 		align-items: center;
 		text-decoration: none;
-		transition: transform var(--transition-fast);
+		transition: transform var(--transition-fast);;
 	}
 
 	.nav-brand:hover {
 		transform: scale(1.02);
 	}
 
-	.transparent-logo {
+	.nav-logo {
 		display: block;
 		height: 40px; 
 		width: auto;
-		mix-blend-mode: multiply; /* Removes white background */
-		filter: contrast(1.05);    /* Keeps tagline sharp */
+		object-fit: contain;
 	}
 	
 
