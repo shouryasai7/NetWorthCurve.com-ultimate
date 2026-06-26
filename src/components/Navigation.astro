@@ -13,14 +13,19 @@ const navLinks = [
 
 <nav class="main-nav" aria-label="Main navigation">
 	<div class="nav-container">
-		<a href="/" class="nav-brand" style="display: flex !important; align-items: center !important; height: 100% !important;" aria-label="NetWorthCurve Home">
-    <img 
-        src="/logo.png" 
-        alt="NetWorthCurve.com Logo" 
-        style="display: block !important; height: 80px !important; width: auto !important; max-height: 80px !important; object-fit: contain !important;"
-        loading="eager"
-    />
-</a>
+		<a href="/" class="nav-brand">
+            <div class="brand-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#33FF66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="NetWorthCurve logo" role="img">
+                    <path d="M3 3v18h18"/>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                    <path d="M15 8h3.7V11.7"/>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">NetWorthCurve</span>
+                <span class="brand-tld">.com</span>
+            </div>
+        </a>
     
             <button type="button" class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
 			<span class="toggle-bar"></span>
@@ -82,55 +87,53 @@ const navLinks = [
 		position: sticky;
         top: 0;
         z-index: 100;
-        height: 110px !important; /* Force the outer navbar height to 110px */
-        background: linear-gradient(180deg, rgba(13, 13, 13, 0.95) 0%, rgba(13, 13, 13, 0.9) 100%);
+        height: 70px;
+        background: var(--bg-surface, #0d0d0d);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(46, 204, 113, 0.15);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 	}
 
 	.nav-container {
-		display: flex !important;
-        align-items: center !important; /* Perfect vertical alignment for logo and nav items */
-        justify-content: space-between !important;
-        height: 100% !important; /* Let it scale to match the 110px height of .main-nav */
+		display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 var(--space-4);
+        padding: 0 1.5rem;
 	}
 
 	.nav-brand {
-		display: flex !important;
-        align-items: center !important;
-        height: 100% !important;
-        flex-shrink: 0 !important;
+		display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: transform 0.2s ease; /* Adds a smooth transition effect */
 	}
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+      }
 
 	.nav-brand:hover {
 		transform: scale(1.02);
 	}
-
-	.nav-logo {
-		display: block !important;
-        height: 55px !important; 
-        width: auto !important;
-        object-fit: contain !important;
-        
-        /* Flips the dark text to white and sharpens the green tagline for dark background */
-        filter: invert(0.95) brightness(1.3) contrast(1.2) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.9));
-        transition: filter 0.3s ease; /* Smooth fade when switching modes *
-	}
-
-     /* 2. OVERRIDE: LIGHT MODE */
-    /* When your JS clicks into action and adds 'light-mode' to the html tag, 
-       we remove the filter so the logo goes back to its original clean colors. */
-    html.light-mode .nav-logo {
-        filter: none !important;
+    .brand-text {
+        display: flex;
+        align-items: baseline;
+        font-weight: 700;
+        font-size: 1.25rem;
     }
-</style>
-	
-
+     .brand-name {
+        color: var(--text-primary, #ffffff);
+    }
+     .brand-tld {
+        color: #33FF66;
+        font-size: 1rem;
+    }
 	.brand-icon svg {
 		width: 100%;
 		height: 100%;
