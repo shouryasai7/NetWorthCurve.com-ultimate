@@ -38,7 +38,10 @@ const footerLinks = {
 							<path d="M15 8h3.7V11.7"/>
 						</svg>
 					</div>
-					<span class="footer-logo-text">NetWorthCurve.com</span>
+					<div class="footer-brand-text">
+                    <span class="footer-brand-name">NetWorthCurve</span>
+                    <span class="footer-brand-tld">.com</span>
+              </div>
 				</a>
 				<p class="footer-tagline">Sovereign wealth management tools. Zero tracking. Zero cloud sync. Complete privacy.</p>
 				<div class="footer-badges">
@@ -179,7 +182,23 @@ const footerLinks = {
 		font-weight: 700;
 		color: #fff;
 		letter-spacing: -0.02em;
-	}
+	}'
+    .footer-brand-text {
+    display: flex;
+    align-items: baseline;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+    .footer-brand-name {
+    color: var(--text-primary, #ffffff);
+  }
+
+    /* This targets the .com and locks it into your accent green */
+    .footer-brand-tld {
+    color: #33FF66 !important;
+    font-size: 1.25rem;
+  }
 
 	.footer-tagline {
 		font-size: 0.9rem;
