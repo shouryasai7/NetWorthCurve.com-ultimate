@@ -18,8 +18,8 @@ const navLinks = [
         src="/logo.png" 
         alt="NetWorthCurve.com Logo" 
         class="nav-logo" 
-        width="280" 
-        height="70" 
+        width="260" 
+        height="65" 
         loading="eager"
     />
 </a>
@@ -86,21 +86,21 @@ const navLinks = [
 	}
 
 	.nav-container {
-		display: flex;
-        align-items: center;         /* Vertically centers the logo and links */
+		display: flex !important;
+        align-items: center !important; /* Vertically aligns logo and links perfectly */
         justify-content: space-between;
-        height: 90px;                /* Taller container to fit the prominent logo */
+        height: 90px !important;       /* Gives the large logo breathing room */
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 var(--space-4);
 	}
 
 	.nav-brand {
-		display: flex;
-        align-items: center;
+		display: flex !important;
+        align-items: center !important;
+        height: 100% !important;        /* Let it use the full height of the header container */
         text-decoration: none;
-        flex-shrink: 0;              /* Forces the brand area to never squash */
-        transition: transform var(--transition-fast);
+        flex-shrink: 0;
 	}
 
 	.nav-brand:hover {
@@ -108,10 +108,13 @@ const navLinks = [
 	}
 
 	.nav-logo {
-		display: block;
-        height: 70px;                /* Perfect sweet-spot size for a big, clear logo */
-        width: auto;                 /* Keeps your logo's aspect ratio perfect */
-        object-fit: contain;
+		display: block !important;
+        height: 65px !important;        /* Increased height to make the tagline physically readable */
+        width: auto !important;         /* Keeps aspect ratio intact */
+        object-fit: contain !important;
+        
+        /* A subtle contrast filter to make that green tagline pop against the background */
+        filter: contrast(1.1);
 	}
 	
 
