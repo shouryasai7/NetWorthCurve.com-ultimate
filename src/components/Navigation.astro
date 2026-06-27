@@ -14,13 +14,22 @@ const navLinks = [
 <nav class="main-nav" aria-label="Main navigation">
 	<div class="nav-container">
 	<a href="/" class="nav-brand">
-    <div class="brand-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#33FF66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="NetWorthCurve logo" role="img">
-            <path d="M3 3v18h18"/>
-            <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-            <path d="M15 8h3.7V11.7"/>
-        </svg>
-    </div>
+
+            <div class="brand-icon">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="#33FF66"
+                     stroke-width="2.5"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-label="NetWorthCurve logo"
+                     role="img">
+                    <path d="M3 3v18h18"/>
+                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                    <path d="M15 8h3.7V11.7"/>
+                </svg>
+            </div>
             <div class="brand-text">
                 <span class="brand-name">NetWorthCurve</span>
                 <span class="brand-tld">.com</span>
@@ -77,68 +86,144 @@ const navLinks = [
 </nav>
 
 <style>
+<style>
 /* Target the outermost header element to ensure it's not clamping the height */
-    header, .site-header, #header {
-        height: auto !important;
-        min-height: 110px !important; /* Forces the header area to expand */
-    }
+header,
+.site-header,
+#header {
+    height: auto !important;
+    min-height: 110px !important;
+}
 
-	.main-nav {
-		position: sticky;
-        top: 0;
-        z-index: 100;
-        height: 70px;
-        background: var(--bg-surface, #0d0d0d);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(46, 204, 113, 0.15);
-	}
+.main-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 70px;
 
-	.nav-container {
-		display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1.5rem;
-	}
+    background: var(--bg-surface, #0d0d0d);
 
-	.nav-brand {
-		display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        text-decoration: none;
-        transition: transform 0.2s ease; /* Adds a smooth transition effect */
-	}
-    .brand-icon {
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-      }
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
-	.nav-brand:hover {
-		transform: scale(1.02);
-	}
-    .brand-text {
-        display: flex;
-        align-items: baseline;
-        font-weight: 700;
-        font-size: 1.25rem;
-    }
-     .brand-name {
-        color: var(--text-primary, #ffffff);
-    }
-     .brand-tld {
-        color: #33FF66;
-        font-size: 1rem;
-    }
-	.brand-icon svg {
-		width: 100%;
-		height: 100%;
-	}
+    border-bottom: 1px solid rgba(46, 204, 113, 0.15);
+}
 
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    text-decoration: none;
+
+    transition: transform .2s ease;
+}
+
+.nav-brand:hover {
+    transform: scale(1.02);
+}
+
+/* ==========================
+   Premium Header Badge
+========================== */
+
+.brand-icon {
+
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    padding: 4px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #13261a 0%,
+            #0a1a0f 55%,
+            #061009 100%
+        );
+
+    border: 1px solid rgba(51,255,102,.35);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        inset 0 -2px 4px rgba(0,0,0,.35),
+        0 0 10px rgba(51,255,102,.18);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.brand-icon svg {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    stroke: #33FF66;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    filter: drop-shadow(0 0 1px rgba(51,255,102,.30));
+}
+
+.nav-brand:hover .brand-icon {
+
+    transform: translateY(-1px);
+
+    border-color: rgba(51,255,102,.55);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.10),
+        inset 0 -2px 4px rgba(0,0,0,.35),
+        0 0 14px rgba(51,255,102,.30);
+}
+
+/* ==========================
+   Brand Text
+========================== */
+
+.brand-text {
+    display: flex;
+    align-items: baseline;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.brand-name {
+    color: var(--text-primary, #ffffff);
+}
+
+.brand-tld {
+    color: #33FF66;
+    font-size: 1rem;
+}
+
+</style>
 	.mobile-toggle {
 		display: none;
 		flex-direction: column;
