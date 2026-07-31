@@ -981,17 +981,16 @@ import Layout from '../layouts/Layout.astro';
     background-color: rgba(128, 128, 128, 0.03); 
     border: 1px solid rgba(128, 128, 128, 0.12);
     border-radius: 12px;
-    padding: 2.25rem;
+    padding: 2.5rem; /* Slightly increased padding for cleaner interior proportion */
   }
 
-  /* HEADER & METADATA STYLES */
+  /* HEADER & METADATA SPACING FIXES */
   .card-header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column; /* Stacked layout prevents meta text from jamming into category badge */
+    align-items: flex-start;
     gap: 0.5rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem; /* Creates clean gap between metadata and main title */
   }
 
   .category-badge {
@@ -1001,48 +1000,50 @@ import Layout from '../layouts/Layout.astro';
     letter-spacing: 0.05em;
     color: #10b981;
     background-color: rgba(16, 185, 129, 0.1);
-    padding: 0.25rem 0.6rem;
+    padding: 0.3rem 0.65rem;
     border-radius: 4px;
     display: inline-block;
   }
 
   .meta-info {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     opacity: 0.65;
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .author {
     font-weight: 600;
   }
 
-  /* HEADINGS */
+  /* MAIN TITLE SPACING FIX */
   h2 {
     font-size: 1.6rem;
     font-weight: 700;
-    line-height: 1.3;
-    margin: 0 0 1.75rem 0;
+    line-height: 1.35;
+    margin: 0 0 2.25rem 0; /* Pushes first section block down, removing header cramp */
     letter-spacing: -0.01em;
     color: inherit;
     padding-left: 14px;
     border-left: 3px solid #10b981;
   }
 
+  /* SECTION BLOCK SPACING FIXES */
   .article-section {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* Generous vertical gap between each h3+paragraph block */
   }
 
   .article-section:last-child {
     margin-bottom: 0;
   }
 
+  /* SUBHEADING SPACING FIX */
   h3 {
     font-size: 1.15rem;
     font-weight: 600;
     line-height: 1.4;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.85rem 0; /* Creates clear breathing space above the paragraph text */
     color: inherit;
     opacity: 0.95;
   }
@@ -1050,7 +1051,7 @@ import Layout from '../layouts/Layout.astro';
   /* BODY TEXT */
   p {
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.75; /* Slightly increased line height to improve readability */
     opacity: 0.85;
     margin: 0;
     color: inherit;
@@ -1060,14 +1061,10 @@ import Layout from '../layouts/Layout.astro';
   /* RESPONSIVE BREAKPOINTS */
   @media (max-width: 640px) {
     .articles-container { padding: 2.5rem 1rem; }
-    .insight-card { padding: 1.5rem; }
+    .insight-card { padding: 1.75rem 1.25rem; }
     h1 { font-size: 2rem; }
-    h2 { font-size: 1.35rem; }
-    h3 { font-size: 1.05rem; }
-    .card-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.4rem;
-    }
+    h2 { font-size: 1.35rem; margin-bottom: 1.75rem; }
+    h3 { font-size: 1.05rem; margin-bottom: 0.65rem; }
+    .article-section { margin-bottom: 1.5rem; }
   }
 </style>
