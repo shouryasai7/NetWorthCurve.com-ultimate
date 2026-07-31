@@ -453,12 +453,49 @@ const faqSchema = {
 .cur-list::-webkit-scrollbar-thumb { background:var(--charcoal-600); border-radius:2px; }
 .cur-no-results { padding:1.5rem; text-align:center; font-size:.82rem; color:var(--charcoal-500); }
 
-.cur-option { display:flex; align-items:center; padding:.6rem 1rem; cursor:pointer; transition:background .12s; }
-.cur-option:hover { background:rgba(46,204,113,.07); }
-.cur-option.selected { background:rgba(46,204,113,.12); }
-.cur-opt-sym { width:38px; flex-shrink:0; font-size:1rem; font-weight:700; color:var(--emerald-400); font-family:var(--font-mono); }
-.cur-opt-name { flex:1; font-size:.83rem; color:var(--charcoal-200); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:1rem; }
-.cur-opt-code { font-size:.72rem; font-family:var(--font-mono); font-weight:600; color:var(--charcoal-500); width:38px; text-align:right; flex-shrink:0; letter-spacing:.04em; }
+/* UPDATED BLOCK */
+.cur-option { 
+  display: flex; 
+  align-items: center; 
+  gap: 0.75rem;                       /* Spacing between symbol, name, and code */
+  padding: .6rem 1rem; 
+  cursor: pointer; 
+  transition: background .12s; 
+}
+.cur-option:hover { background: rgba(46,204,113,.07); }
+.cur-option.selected { background: rgba(46,204,113,.12); }
+
+.cur-opt-sym { 
+  width: 2.25rem;                     /* Fixed column width keeps all names vertically aligned */
+  text-align: center;
+  flex-shrink: 0; 
+  font-size: 1rem; 
+  font-weight: 700; 
+  color: var(--emerald-400); 
+  font-family: var(--font-mono); 
+}
+
+.cur-opt-name { 
+  flex: 1;                            /* Pushes the code badge to the far right boundary */
+  font-size: .83rem; 
+  color: var(--charcoal-200); 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.cur-opt-code { 
+  font-size: .72rem; 
+  font-family: var(--font-mono); 
+  font-weight: 600; 
+  color: var(--charcoal-500); 
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: .15rem .4rem;
+  border-radius: 4px;
+  flex-shrink: 0; 
+  letter-spacing: .04em; 
+}
 
 .engine-section { padding:4rem 0; border-bottom:1px solid var(--charcoal-700); }
 .alt-bg { background:rgba(0,0,0,.15); }
